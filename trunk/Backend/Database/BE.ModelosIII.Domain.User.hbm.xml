@@ -1,0 +1,26 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="BE.ModelosIII.Domain.User, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Users">
+    <id name="Id" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="UserId" />
+      <generator class="identity" />
+    </id>
+    <property name="Email" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Email" />
+    </property>
+    <property name="Password" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Password" />
+    </property>
+    <property name="Name" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Name" />
+    </property>
+    <property name="Surname" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Surname" />
+    </property>
+    <property name="Enabled" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Enabled" />
+    </property>
+    <many-to-one class="BE.ModelosIII.Domain.Role, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Role">
+      <column name="RoleId" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

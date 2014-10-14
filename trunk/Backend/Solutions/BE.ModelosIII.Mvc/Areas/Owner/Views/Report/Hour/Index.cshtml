@@ -1,0 +1,76 @@
+﻿@using BE.ModelosIII.Infrastructure.Helpers
+@using MvcContrib.FluentHtml
+@inherits ModelWebViewPage<BE.ModelosIII.Mvc.Models.Report.MostSoldHourListModel>
+@{
+    ViewBag.Title = "Horarios más vendidos";
+    Layout = ViewBag.Layout;
+}
+
+@Html.Partial("Hour/_Search", Model.Search)
+@Html.Partial("Hour/_List", Model.ReportRows)
+@if(Model.ReportRows.Any())
+{
+    @Html.Partial("Hour/_Chart", Model.ReportRows)
+}
+
+@section scripts {
+    <script type="text/javascript" src="/Content/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/Content/js/tables.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        var reportRows = JSON.parse('@Html.Raw(Model.ReportRows.ToJson())');
+
+        $(function () {
+            initializeDataTableOnLoad('.datatable');
+
+            var dateSince = $(".datepickerSince").datepicker({
+                format: "dd/mm/yyyy",
+                weekStart: 0
+            }).on('changeDate', function (ev) {
+                if (ev.date.valueOf() > dateTo.date.valueOf()) {
+                    var newDate = new Date(ev.date);
+                    newDate.setDate(newDate.getDate());
+                    dateTo.setValue(newDate);
+                }
+                dateSince.hide();
+            }).data("datepicker");
+
+            var dateTo = $(".datepickerTo").datepicker({
+                format: "dd/mm/yyyy",
+                weekStart: 0,
+                onRender: function (date) {
+                    return date.valueOf() < dateSince.date.valueOf() ? 'disabled' : '';
+                }
+            }).on('changeDate', function (ev) {
+                dateTo.hide();
+            }).data("datepicker");
+        });
+
+        if (reportRows.length > 0) {
+            google.load("visualization", "1", { packages: ["corechart"] });
+            google.setOnLoadCallback(drawChart);
+        }
+            
+        function drawChart() {
+            var dataArray = [['Horario', 'Ventas']];
+            for (var i = 0; i < reportRows.length; i++) {
+                dataArray.push([reportRows[i].StartTime, reportRows[i].SoldTickets]);
+            }
+
+            var data = google.visualization.arrayToDataTable(dataArray);
+
+            var options = {
+                title: 'Horarios más vendidos',
+                hAxis: { title: 'Horario', titleTextStyle: { color: 'red'} }
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+            chart.draw(data, options);
+        }
+
+    </script>
+}
+
+@section css {
+    <link href="/Content/styles/datepicker.css" rel="stylesheet" type="text/css" />
+}

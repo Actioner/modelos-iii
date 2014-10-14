@@ -1,0 +1,63 @@
+﻿@using BE.ModelosIII.Mvc.Models.Multiplex
+@using MvcContrib.FluentHtml
+@model BE.ModelosIII.Mvc.Models.Screening.ScreeningSearchModel
+
+
+<section class="utopia-widget">
+	<div class="utopia-widget-title">
+		<img class="utopia-widget-icon" src="/Content/img/icons/lightbulb.png">
+		<span>Filtros</span>
+	</div>
+    <div class="utopia-widget-content">
+        <div class="row-fluid">
+            @using (Html.BeginForm("Index", "Screening", FormMethod.Post, new { @id = "searchForm", @class = "form-horizontal" }))
+            {
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Complejo:</label>
+                        <div class="controls">
+                              @(this.Select("MultiplexId")
+                                    .Options(((IList<MultiplexModel>)ViewBag.Multiplexes).ToDictionary(x => x.Id, x => x.Name))
+                                    .FirstOption("Seleccione un Complejo")
+                                    .Selected(Model.MultiplexId)
+                                    .Class("span12 multiplexSelect"))
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Sala:</label>
+                        <div class="controls">
+                             @(this.Select("ScreenId")
+                                    .FirstOption("Seleccione un Complejo")
+                                    .Selected(Model.ScreenId)
+                                    .Class("span12 screenSelect"))
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Fecha:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Date, new { @class = "input-medium datepicker", @Value = Model.Date.HasValue ? Model.Date.Value.ToString("dd/MM/yyyy") : string.Empty })
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="span12">
+                    <div class="control-group">
+                        <div class="utopia-form-button">
+                            <div class="utopia-all-button">
+                                <button href="javascript:void(0)" type="submit" class="btn btn-primary span4">
+                                    Filtrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

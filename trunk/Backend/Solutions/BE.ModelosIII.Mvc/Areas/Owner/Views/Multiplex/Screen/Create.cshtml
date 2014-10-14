@@ -1,0 +1,29 @@
+﻿@model BE.ModelosIII.Tasks.Commands.Multiplex.Screen.CreateScreenCommand
+@{
+    ViewBag.Title = "Crear Sala";
+    Layout = ViewBag.Layout;
+}
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Crear Sala Para el Complejo "@ViewBag.Multiplex"</span>
+    </div>
+    <div class="row-fluid">
+		<div class="utopia-widget-content">
+	    	<div class="span12 utopia-form-freeSpace">
+		        @Html.Partial("Screen/_Form", Model)
+		    </div>
+		</div>
+	</div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" src="/Content/fancybox/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="/Content/fancybox/helpers/jquery.fancybox-media.js"></script>
+    <script type="text/javascript" src="/Content/js/File/uploadXMLFile.js"></script>
+    <script type="text/javascript" src="/Content/js/Multiplex/screen.js"></script>
+}
+@section css {
+    <link href="/Content/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+    @*<link href="/Content/jquery.fancybox-buttons.css" rel="stylesheet" type="text/css" />*@
+}

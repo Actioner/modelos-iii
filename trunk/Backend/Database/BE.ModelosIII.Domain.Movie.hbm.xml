@@ -1,0 +1,55 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="BE.ModelosIII.Domain.Movie, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Movies">
+    <id name="Id" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="MovieId" />
+      <generator class="identity" />
+    </id>
+    <bag name="Genres" table="MovieGenres">
+      <key>
+        <column name="MovieId" />
+      </key>
+      <element type="BE.ModelosIII.Domain.Genre, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <column name="Genre" />
+      </element>
+    </bag>
+    <bag name="Screenings">
+      <key>
+        <column name="MovieId" />
+      </key>
+      <one-to-many class="BE.ModelosIII.Domain.Screening, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    </bag>
+    <property name="Title" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Title" />
+    </property>
+    <property name="OriginalTitle" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="OriginalTitle" />
+    </property>
+    <property name="YearOfRelease" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="YearOfRelease" />
+    </property>
+    <property name="Director" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Director" />
+    </property>
+    <property name="MainCast" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="MainCast" sql-type="text" />
+    </property>
+    <property name="Trailer" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Trailer" />
+    </property>
+    <property name="Synopsis" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Synopsis" sql-type="text" />
+    </property>
+    <property name="SmallPoster" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="SmallPoster" />
+    </property>
+    <property name="Poster" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Poster" />
+    </property>
+    <property name="Runtime" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Runtime" />
+    </property>
+    <many-to-one class="BE.ModelosIII.Domain.Rating, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Rating">
+      <column name="RatingId" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+﻿@using BE.ModelosIII.Infrastructure.Helpers
+@model IEnumerable<BE.ModelosIII.Mvc.Models.Util.ActionModel>
+
+@if (Model.Any())
+{
+    <div class="row-fluid">
+    <div class="span6">
+        <div class="utopia-table-action">
+            <div class="btn-group">
+                <a class="btn" href="#"><i class="icon-cog"></i>Acciones </a>
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    @foreach (var actionModel in Model)
+                    {
+                        <li><a href="@Url.Action(actionModel.Action, actionModel.RouteValues)"><i class="@actionModel.IconType.ToDescription()"></i>@actionModel.Name </a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+}

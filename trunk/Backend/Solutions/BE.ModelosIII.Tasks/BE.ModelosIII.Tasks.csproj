@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BE.ModelosIII.Tasks</RootNamespace>
+    <AssemblyName>BE.ModelosIII.Tasks</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\Build\Signing\BE.ModelosIII.snk</AssemblyOriginatorKeyFile>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Solutions\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\Packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpArch.Domain, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Packages\SharpArch.Domain.2.0.4\lib\NET40\SharpArch.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpArch.NHibernate, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Common\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AutoMappingsCreator.cs" />
+    <Compile Include="CommandHandlers\Gateway\ProcessPaymentHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\CreateMultiplexHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\DeleteMultiplexHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\EditMultiplexHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\MultiplexHandler.cs" />
+    <Compile Include="CommandHandlers\Movie\DeleteMovieHandler.cs" />
+    <Compile Include="CommandHandlers\Movie\CreateMovieHandler.cs" />
+    <Compile Include="CommandHandlers\Movie\EditMovieHandler.cs" />
+    <Compile Include="CommandHandlers\Movie\MovieHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\Screen\CreateScreenHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\Screen\DeleteScreenHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\Screen\EditScreenHandler.cs" />
+    <Compile Include="CommandHandlers\Multiplex\Screen\ScreenHandler.cs" />
+    <Compile Include="CommandHandlers\Promotion\CreatePromotionHandler.cs" />
+    <Compile Include="CommandHandlers\Promotion\EditPromotionHandler.cs" />
+    <Compile Include="CommandHandlers\Promotion\GeneralPriceHandler.cs" />
+    <Compile Include="CommandHandlers\Promotion\DeletePromotionHandler.cs" />
+    <Compile Include="CommandHandlers\Promotion\PromotionHandler.cs" />
+    <Compile Include="CommandHandlers\Reservation\DeleteReservationHandler.cs" />
+    <Compile Include="CommandHandlers\Reservation\CreateReservationHandler.cs" />
+    <Compile Include="CommandHandlers\Screening\AssignScreeningHandler.cs" />
+    <Compile Include="CommandHandlers\Screening\DeleteScreeningHandler.cs" />
+    <Compile Include="CommandHandlers\Screening\EditScreeningHandler.cs" />
+    <Compile Include="CommandResult.cs" />
+    <Compile Include="Commands\Account\ManageAccountCommand.cs" />
+    <Compile Include="Commands\Gateway\ProcessPaymentCommand.cs" />
+    <Compile Include="Commands\Promotion\CreatePromotionCommand.cs" />
+    <Compile Include="Commands\Promotion\EditPromotionCommand.cs" />
+    <Compile Include="Commands\Promotion\GeneralPriceCommand.cs" />
+    <Compile Include="Commands\Promotion\DeletePromotionCommand.cs" />
+    <Compile Include="Commands\Movie\DeleteMovieCommand.cs" />
+    <Compile Include="Commands\Movie\CreateMovieCommand.cs" />
+    <Compile Include="Commands\Movie\EditMovieCommand.cs" />
+    <Compile Include="Commands\Movie\MovieCommand.cs" />
+    <Compile Include="Commands\Multiplex\CreateMultiplexCommand.cs" />
+    <Compile Include="Commands\Multiplex\DeleteMultiplexCommand.cs" />
+    <Compile Include="Commands\Multiplex\EditMultiplexCommand.cs" />
+    <Compile Include="Commands\Multiplex\MultiplexCommand.cs" />
+    <Compile Include="Commands\Multiplex\Screen\CreateScreenCommand.cs" />
+    <Compile Include="Commands\Multiplex\Screen\DeleteScreenCommand.cs" />
+    <Compile Include="Commands\Multiplex\Screen\EditScreenCommand.cs" />
+    <Compile Include="Commands\Multiplex\Screen\ScreenCommand.cs" />
+    <Compile Include="Commands\Promotion\PromotionCommand.cs" />
+    <Compile Include="Commands\Report\MostSoldCommand.cs" />
+    <Compile Include="Commands\Reservation\DeleteReservationCommand.cs" />
+    <Compile Include="Commands\Reservation\CreateReservationCommand.cs" />
+    <Compile Include="Commands\Screening\AssignScreeningCommand.cs" />
+    <Compile Include="Commands\Screening\DeleteScreeningCommand.cs" />
+    <Compile Include="Commands\Screening\EditScreeningCommand.cs" />
+    <Compile Include="Commands\Security\LoginCommand.cs" />
+    <Compile Include="Commands\Utility\RowModel.cs" />
+    <Compile Include="Commands\Utility\SeatModel.cs" />
+    <Compile Include="Commands\Utility\FileUploadModel.cs" />
+    <Compile Include="Validators\Account\ManageAccountValidator.cs" />
+    <Compile Include="Validators\Gateway\ProcessPaymentValidator.cs" />
+    <Compile Include="Validators\Multiplex\CreateMultiplexValidator.cs" />
+    <Compile Include="Validators\Multiplex\CreateOrEditMultiplexValidator.cs" />
+    <Compile Include="Validators\Multiplex\EditMultiplexValidator.cs" />
+    <Compile Include="Validators\Movie\CreateOrEditMovieValidator.cs" />
+    <Compile Include="Validators\Movie\CreateMovieValidator.cs" />
+    <Compile Include="Validators\Movie\EditMovieValidator.cs" />
+    <Compile Include="Validators\Multiplex\Screen\CreateScreenValidator.cs" />
+    <Compile Include="Validators\Multiplex\Screen\CreateOrEditScreenValidator.cs" />
+    <Compile Include="Validators\Multiplex\Screen\EditScreenValidator.cs" />
+    <Compile Include="Validators\Promotion\CreatePromotionValidator.cs" />
+    <Compile Include="Validators\Promotion\CreateOrEditPromotionValidator.cs" />
+    <Compile Include="Validators\Promotion\EditPromotionValidator.cs" />
+    <Compile Include="Validators\Promotion\GeneralPriceValidator.cs" />
+    <Compile Include="Validators\Report\MostSoldValidator.cs" />
+    <Compile Include="Validators\Reservation\DeleteReservationValidator.cs" />
+    <Compile Include="Validators\Reservation\CreateReservationValidator.cs" />
+    <Compile Include="Validators\Screening\AssignScreeningValidator.cs" />
+    <Compile Include="Validators\Screening\EditScreeningValidator.cs" />
+    <Compile Include="Validators\Security\LoginValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BE.ModelosIII.Domain\BE.ModelosIII.Domain.csproj">
+      <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
+      <Name>BE.ModelosIII.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BE.ModelosIII.Infrastructure\BE.ModelosIII.Infrastructure.csproj">
+      <Project>{9544D94B-9B6E-4B61-8A09-88382205BF86}</Project>
+      <Name>BE.ModelosIII.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BE.ModelosIII.Resources\BE.ModelosIII.Resources.csproj">
+      <Project>{7F88A658-6AD3-494D-975D-47C0B5D75033}</Project>
+      <Name>BE.ModelosIII.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,17 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="BE.ModelosIII.Domain.Screening, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Screenings">
+    <id name="Id" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="ScreeningId" />
+      <generator class="identity" />
+    </id>
+    <property name="StartDate" type="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="StartDate" />
+    </property>
+    <many-to-one class="BE.ModelosIII.Domain.Screen, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Screen">
+      <column name="ScreenId" />
+    </many-to-one>
+    <many-to-one class="BE.ModelosIII.Domain.Movie, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Movie">
+      <column name="MovieId" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

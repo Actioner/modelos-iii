@@ -1,0 +1,104 @@
+﻿@using BE.ModelosIII.Domain
+@using BE.ModelosIII.Infrastructure.Helpers
+@using BE.ModelosIII.Mvc.Models.Multiplex
+@using MvcContrib.FluentHtml
+@inherits ModelWebViewPage<BE.ModelosIII.Tasks.Commands.Multiplex.MultiplexCommand>
+@using (Html.BeginForm((string)ViewBag.ActionName, "Multiplex", FormMethod.Post, new { @id = "multiplexForm", @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Nombre</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Name, new { @class = "span4", maxlength = "255" })
+                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Dirección</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Address, new { @class = "span4", maxlength = "255" })
+                @Html.ValidationMessageFor(m => m.Address, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Ciudad</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.City, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.City, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Colectivos</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Buses, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Buses, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Subtes</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Subways, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Subways, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Latitud</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Latitude, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Latitude, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Longitud</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Longitude, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Longitude, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <section class="utopia-widget">
+            <div class="utopia-widget-title">
+                <span>Imágenes</span>
+            </div>
+            <div class="row-fluid">
+                <div class="utopia-widget-content">
+                    <div class="span12 utopia-form-freeSpace">
+                         @if (!string.IsNullOrWhiteSpace(Model.Poster))
+                         {
+                             <div class="control-group box-last">
+                                 <label for="inputError" class="control-label">Poster Actual</label>
+                                 <div class="controls"><img class="bannerHolder" src="@Model.Poster" alt="" style=""/></div>
+                                 <a href="@Model.Poster" class="btn span2 previewPoster">Ver en tamaño original</a>
+                             </div>
+                             @Html.HiddenFor(m => m.Poster)
+                         }
+                        <div class="control-group box-last">
+                            <label for="inputError" class="control-label">Poster Nuevo</label>
+                            <div class="controls">
+                                @Html.Partial("_FileUpload", Model.NewPoster, new ViewDataDictionary(Html.ViewDataContainer.ViewData)
+                           {
+                               TemplateInfo = new TemplateInfo { HtmlFieldPrefix = "NewPoster" }
+                           })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Poster, null, new { @class = "help-inline" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="control-group box-button">
+            <div class="utopia-form-button">
+                <a href="@Url.Action("Index")" class="btn span2">Cancelar</a>
+                <button href="javascript:void(0)" type="submit" class="btn btn-primary span2">
+                    Guardar</button>
+            </div>
+        </div>
+        @Html.AntiForgeryToken()
+    </fieldset>
+}

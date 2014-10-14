@@ -1,0 +1,59 @@
+﻿@using BE.ModelosIII.Mvc.Models.Util
+@model IEnumerable<BE.ModelosIII.Mvc.Models.Screen.ScreenModel>
+@{
+    ViewBag.Title = "Salas";
+    Layout = ViewBag.Layout;
+}
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Listado de Salas del Complejo "@ViewBag.Multiplex"</span>
+    </div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Capacidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Capacidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var screenModel in Model)
+                {
+                    <tr>
+                        <td>@screenModel.Name</td>
+                        <td>@screenModel.Capacity</td>
+                        <td class="actions">
+                            <a class="edit" data-original-title="Editar" href="@Url.Action("ScreenEdit", new { Id = screenModel.Id })">
+                                <img alt="Edit" src="/Content/img/icons/pencil.png"></a>
+                            <a class="delete" data-original-title="Borrar" href="@Url.Action("ScreenDelete", new { Id = screenModel.Id, MultiplexId = screenModel.MultiplexId })">
+                                <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
+                        </td>   
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" src="/Content/js/tables.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            initializeDataTableOnLoad('.datatable');
+        });
+    </script>
+}

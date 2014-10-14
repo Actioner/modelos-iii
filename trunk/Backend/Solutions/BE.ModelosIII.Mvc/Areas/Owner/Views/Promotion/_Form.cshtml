@@ -1,0 +1,121 @@
+﻿@using System.Globalization
+@using BE.ModelosIII.Domain
+@using BE.ModelosIII.Infrastructure.Helpers
+@using BE.ModelosIII.Mvc.Components.Html
+@using MvcContrib.FluentHtml
+@inherits ModelWebViewPage<BE.ModelosIII.Tasks.Commands.Promotion.PromotionCommand>
+@using (Html.BeginForm((string)ViewBag.ActionName, "Promotion", FormMethod.Post, new { @id = "promotionForm", @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Nombre</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Name, new { @class = "span4", maxlength = "255" })
+                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Descripción</label>
+            <div class="controls">
+                @Html.TextAreaFor(m => m.Description, new { @class = "span4", maxlength = "255" })
+                @Html.ValidationMessageFor(m => m.Description, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Desde</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.StartDate, new { @class = "input-medium datepickerSince span4", @Value = Model.StartDate != DateTime.MinValue ? Model.StartDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy") })
+                @Html.ValidationMessageFor(m => m.StartDate, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Hasta</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.EndDate, new { @class = "input-medium datepickerTo span4", @Value = Model.EndDate != DateTime.MinValue ? Model.EndDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy") })
+                @Html.ValidationMessageFor(m => m.EndDate, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Días de la Semana</label>
+            <div class="controls">
+                @(this.CheckBoxList("Days")
+                        .Options(Enum.GetValues(typeof(DayOfWeek))
+                                    .Cast<DayOfWeek>()
+                                    .ToDictionary(x => ((int)x).ToString(CultureInfo.InvariantCulture), x => x.ToLocalizedLabel(CultureInfo.CurrentCulture)))
+                        .Selected(Model.Days != null ? Model.Days.Select(x => (int)x) : null)
+                        .Class("span9 checkboxList"))
+                @Html.ValidationMessageFor(m => m.Days, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Tipo</label>
+            <div class="controls">
+                @(this.Select("Type")
+                        .Options(Enum.GetValues(typeof(PromotionType)).Cast<PromotionType>(), g => (int)g, g => g.ToDescription())
+                        .Selected(Model.Type)
+                        .Class("span4 populate placeholder"))
+                @Html.ValidationMessageFor(m => m.Type, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Valor</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Value, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Value, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                Activa</label>
+            <div class="controls">
+                @Html.CheckBoxFor(m => m.Active, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Active, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <section class="utopia-widget">
+            <div class="utopia-widget-title">
+                <span>Imágenes</span>
+            </div>
+            <div class="row-fluid">
+                <div class="utopia-widget-content">
+                    <div class="span12 utopia-form-freeSpace">
+                         @if (!string.IsNullOrWhiteSpace(Model.Poster))
+                         {
+                             <div class="control-group box-last">
+                                 <label for="inputError" class="control-label">Poster Actual</label>
+                                 <div class="controls"><img class="bannerHolder" src="@Model.Poster" alt="" style=""/></div>
+                                 <a href="@Model.Poster" class="btn span2 previewPoster">Ver en tamaño original</a>
+                             </div>
+                             @Html.HiddenFor(m => m.Poster)
+                         }
+                        <div class="control-group box-last">
+                            <label for="inputError" class="control-label">Poster Nuevo</label>
+                            <div class="controls">
+                            @Html.Partial("_FileUpload", Model.NewPoster, new ViewDataDictionary(Html.ViewDataContainer.ViewData)
+                            {
+                                TemplateInfo = new TemplateInfo { HtmlFieldPrefix = "NewPoster" }
+                            })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Poster, null, new { @class = "help-inline" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="control-group box-button">
+            <div class="utopia-form-button">
+                <a href="@Url.Action("Index")" class="btn span2">Cancelar</a>
+                <button href="javascript:void(0)" type="submit" class="btn btn-primary span2">
+                    Guardar</button>
+            </div>
+        </div>
+        @Html.AntiForgeryToken()
+    </fieldset>
+}

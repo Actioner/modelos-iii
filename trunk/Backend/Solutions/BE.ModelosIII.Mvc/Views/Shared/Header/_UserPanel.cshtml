@@ -1,0 +1,16 @@
+﻿<div class="user-backend header-divider">
+    <div class="user-info">
+        <img src="/Content/img/icons/user.png" alt="">
+        <a href="#">@User.Identity.Name</a>
+    </div>
+    <div class="user-dropbox">
+        <ul>
+          @*  <li class="user"><a href="@Url.Action("Manage","Account")">Perfil</a> </li>*@
+           @* <li class="theme-changer dark-theme"><a href="javascript:void(0)" class="dark" rel="Content/styles/themes/utopia-dark.css">
+                Tema oscuro</a> </li>
+            <li class="theme-changer white-theme"><a href="javascript:void(0)" class="white"
+                rel="Content/styles/utopia-white.css">Tema Blanco</a> </li>*@
+            <li class="logout"><a href="@Url.Action("LogOut", "Security", new { area = string.Empty })">Cerrar Sesión</a> </li>
+        </ul>
+    </div>
+</div>
