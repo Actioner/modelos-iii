@@ -1,0 +1,74 @@
+﻿@using BE.ModelosIII.Mvc.Models.Util
+@model IEnumerable<BE.ModelosIII.Mvc.Models.Movie.MovieModel>
+@{
+    ViewBag.Title = "Películas";
+    Layout = ViewBag.Layout;
+}
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Listado de Películas</span>
+    </div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Director</th>
+                    <th>Reparto</th>
+                    <th>Género</th>
+                    <th>Clasificación</th>
+                    <th>Año</th>
+                    <th>Título Original</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Título</th>
+                    <th>Director</th>
+                    <th>Reparto</th>
+                    <th>Género</th>
+                    <th>Clasificación</th>
+                    <th>Año</th>
+                    <th>Título Original</th>
+                    <th>Acciones</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var movieModel in Model)
+                {
+                    <tr>
+                        <td>@movieModel.Title</td>
+                        <td>@movieModel.Director</td>
+                        <td>@movieModel.MainCast</td>
+                        <td>@movieModel.Genres</td>
+                        <td>@movieModel.Rating.Name</td>
+                        <td>@movieModel.YearOfRelease</td>
+                        <td>@movieModel.OriginalTitle</td>
+                        <td class="actions">
+                            <a class="edit" href="@Url.Action("Edit", new { Id = movieModel.Id })">
+                                <img alt="Edit" src="/Content/img/icons/pencil.png"></a>
+                            <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = movieModel.Id })">
+                                    <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
+                        </td>   
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" src="/Content/js/tables.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            initializeDataTableOnLoad('.datatable');
+        });
+    </script>
+}

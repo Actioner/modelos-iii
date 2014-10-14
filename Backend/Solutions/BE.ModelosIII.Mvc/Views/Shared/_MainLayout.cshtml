@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+<div class="container-fluid">
+    @Html.Partial("Header/_Header")
+    <div class="row-fluid">
+        <div class="span2 sidebar-container">
+            <div class="sidebar">
+                <div class="navbar sidebar-toggle">
+                    <div class="container">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                            class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="nav-collapse collapse leftmenu">
+                    @RenderSection("sidebar")
+                </div>
+            </div>
+        </div>
+        <div class="span10 body-container">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+@section css
+{
+    @Styles.Render("~/mainlayout/css")
+    @RenderSection("css", required: false)
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/mainlayout")
+    @RenderSection("scripts", required: false)
+}

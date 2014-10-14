@@ -1,0 +1,1 @@
+SCF={};$(document).ready(function(){$(".js-select").chosen();SCF.Commutator.init();var a=new SCF.Checkbox(".js-checkbox");a.init();$(".radiogroup").each(function(d){var b="js-radiogroup-"+d;$(this).addClass(b);var c=new SCF.Radio("."+b);c.init()})});

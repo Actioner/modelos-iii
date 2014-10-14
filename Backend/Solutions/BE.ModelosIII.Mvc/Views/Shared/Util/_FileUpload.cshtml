@@ -1,0 +1,31 @@
+﻿@model BE.ModelosIII.Tasks.Commands.Utility.FileUploadModel
+@{
+    Layout = null;
+}
+
+<div id="@Model.Id" class="fileUpload span8">
+    @Html.HiddenFor(m => m.NewFile)
+    <div class="newImagePreview preview" style="display: none">
+        <img class="newImageHolder bannerHolder" src="" alt="" style="" />
+        <div class="utopia-alert-button">
+            <button class="newImage btn btn-info span2">Subir otra</button>
+        </div>
+    </div>
+
+    <div class="fileBox utopia-chart-legend">
+        <div class="dropFile desc utopia-chart-desc">
+            Tire el archivo de imagen a subir aquí o <a class="fileBoxTrigger" href="#">seleccione un archivo</a>
+        </div>
+
+        <div class="progressStatus status" style="display: none">
+            <div class="progress progress-danger progress-striped" style="margin-bottom: 9px;">
+                <div class="bar" style="width: 0%"></div>
+            </div>
+            <div class="uploadStatus utopia-chart-desc"></div>
+            <div class="progressInfo utopia-chart-desc"></div>
+        </div>
+    </div>
+    @Html.ValidationMessageFor(m => m.NewFile, null, new { @class = "error-input" })
+    <span class="invalidFile error-input" style="display: none;">Error de upload. Tipos de archivos soportados, .png, .jpg, .gif y .svg</span>
+    <input id="@(Model.Id + "Input")" name="@(Model.Id + "Input")" type="file"  />
+</div>

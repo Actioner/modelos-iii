@@ -1,0 +1,99 @@
+﻿@using BE.ModelosIII.Mvc.Models.Util
+@using BE.ModelosIII.Mvc.Models.Util
+@model IEnumerable<BE.ModelosIII.Mvc.Models.User.UserModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.Layout;
+}
+<section class="utopia-widget">
+	<div class="utopia-widget-title">
+		<img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+		<span>Listado de Usuarios</span>
+	</div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Nombre Completo</th>
+                    <th>DNI</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Habilitado</th>
+                    @*<th>Acciones</th>*@
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Email</th>
+                    <th>Nombre Completo</th>
+                    <th>DNI</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Habilitado</th>
+                    @*<th>Acciones</th>*@
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var userModel in Model)
+                {
+                    <tr>
+                        <td>@userModel.Email</td>
+                        <td>@userModel.FullName</td>
+                        <td>@userModel.Document</td>
+                        <td>@userModel.Phone</td>
+                        <td>@userModel.BirthDate</td>
+                        <td>
+                            <input class="enableOrDisable" checked="@userModel.Enabled" type="checkbox" value="@userModel.Enabled" data-id="@userModel.Id" data-email="@userModel.Email"/>
+                        </td>
+                        @*  <td class="actions">
+                            <a class="edit" href="@Url.Action("Edit", new { Id = userModel.Id })">
+                                <img alt="Edit" src="/Content/img/icons/pencil.png"></a>
+                        </td>   *@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+@section scripts {
+    <script type="text/javascript" src="/Content/js/tables.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            initializeDataTableOnLoad('.datatable');
+
+            $(document).on('click', '.enableOrDisable', function(ev) {
+                ev.preventDefault();
+                var self = $(this);
+                var id = self.data("id");
+                var email = self.data("email");
+                var enabled = self.is(':checked');
+                var label = enabled ? "habilitar" : "inhabilitar";
+
+                jConfirm("¿Realmente desea " + label + " al usuario " + email + "?", "Confirmación", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: '@Url.Action("EnableOrDisableUser")',
+                            type: 'POST',
+                            data: {
+                                'Id': id,
+                                'Enabled': enabled
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.success) {
+                                    self.prop('checked', enabled);
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

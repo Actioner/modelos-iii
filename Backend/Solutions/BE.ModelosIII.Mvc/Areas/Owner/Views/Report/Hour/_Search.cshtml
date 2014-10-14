@@ -1,0 +1,62 @@
+﻿@using BE.ModelosIII.Mvc.Models.Multiplex
+@using MvcContrib.FluentHtml
+@model BE.ModelosIII.Tasks.Commands.Report.MostSoldCommand
+
+
+<section class="utopia-widget">
+	<div class="utopia-widget-title">
+		<img class="utopia-widget-icon" src="/Content/img/icons/lightbulb.png">
+		<span>Filtros</span>
+	</div>
+    <div class="utopia-widget-content">
+        <div class="row-fluid">
+            @using (Html.BeginForm("MostSoldHour", "Report", FormMethod.Post, new { @id = "searchForm", @class = "form-horizontal" }))
+            {
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Complejo:</label>
+                        <div class="controls">
+                              @(this.Select("MultiplexId")
+                                    .Options(((IList<MultiplexModel>)ViewBag.Multiplexes).ToDictionary(x => x.Id, x => x.Name))
+                                    .FirstOption("Seleccione un Complejo")
+                                    .Selected(Model.MultiplexId)
+                                    .Class("span12 multiplexSelect"))
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Fecha Desde:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.From, new { @class = "input-medium datepickerSince", @Value = Model.From != DateTime.MinValue ? Model.From.ToString("dd/MM/yyyy") : string.Empty })
+                            @Html.ValidationMessageFor(m => m.From, null, new { @class = "help-inline" })
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Fecha Hasta:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.To, new { @class = "input-medium datepickerTo", @Value = Model.To != DateTime.MinValue ? Model.To.ToString("dd/MM/yyyy") : string.Empty })
+                            @Html.ValidationMessageFor(m => m.To, null, new { @class = "help-inline" })
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="span12">
+                    <div class="control-group">
+                        <div class="utopia-form-button">
+                            <div class="utopia-all-button">
+                                <button href="javascript:void(0)" type="submit" class="btn btn-primary span4">
+                                    Filtrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

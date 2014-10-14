@@ -1,0 +1,1 @@
+(function(){function c(d){this.radioGroup=d;this.radio=this.radioGroup+" .js-radio"}var a=c.prototype;var b=c;SCF.Radio=c;a.init=function(){this.bindEvents()};a.bindEvents=function(){var d=this;$(this.radio).click(function(){$(d.radio).removeClass("checked");$(this).addClass("checked")})}}());

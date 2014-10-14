@@ -1,0 +1,48 @@
+﻿@using BE.ModelosIII.Infrastructure
+@model BE.ModelosIII.Tasks.Commands.Multiplex.Screen.ScreenCommand
+
+@if (Model.Rows != null && Model.Rows.Count > 0)
+{
+    <div style="width: 50%; text-align: center">PANTALLA</div>
+    <table>
+        <tr>
+            <td>
+            </td>
+            @for (int i = 1; i <= BackendSettings.MaxNumberOfSeatsInScreen; i++)
+            {
+                 <td style="text-align: center">@i</td>
+            }
+        </tr>
+        @for (int i = 0; i < Model.Rows.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(m => m.Rows[i].Id)
+                    @Html.HiddenFor(m => m.Rows[i].Name)
+                    @Model.Rows[i].Name
+                </td>
+                @for (int j = 1; j <= BackendSettings.MaxNumberOfSeatsInScreen; j++)
+                {
+                    var seat = Model.Rows[i].Seats.SingleOrDefault(s => s.Number == j);
+                    int index = Model.Rows[i].Seats.IndexOf(seat);
+                    if (seat != null)
+                    {
+                        <td title="@(Model.Rows[i].Name + seat.Number)" style="width:30px; height:30px; background-image: url('/Content/img/seat.png');">
+                            @Html.HiddenFor(m => m.Rows[i].Seats[index].Id)
+                            @Html.HiddenFor(m => m.Rows[i].Seats[index].Number)
+                        </td>
+                    }
+                    else
+                    {
+                        <td title="@(Model.Rows[i].Name + j)"  style=" width:30px; height:30px;">
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div>@ViewBag.Error</div>
+}

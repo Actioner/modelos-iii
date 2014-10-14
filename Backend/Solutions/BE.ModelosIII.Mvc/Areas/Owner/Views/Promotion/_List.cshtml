@@ -1,0 +1,59 @@
+﻿@using BE.ModelosIII.Mvc.Models.Util
+@inherits MvcContrib.FluentHtml.ModelWebViewPage<IEnumerable<BE.ModelosIII.Mvc.Models.Promotion.PromotionModel>>
+
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Listado de Promociones</span>
+    </div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Días</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Días</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var screeningModel in Model)
+                {
+                    <tr>
+                        <td>@screeningModel.Name</td>
+                        <td>@screeningModel.Type</td>
+                        <td>@screeningModel.StartDate</td>
+                        <td>@screeningModel.EndDate</td>
+                        <td>@screeningModel.Days</td>
+                        <td>@screeningModel.Status</td>
+                        <td class="actions">
+                          <a class="edit" data-original-title="Editar" href="@Url.Action("Edit", new { Id = screeningModel.Id })">
+                                <img alt="Edit" src="/Content/img/icons/pencil.png"></a>
+                           <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = screeningModel.Id })">
+                                    <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
+                        </td>   
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

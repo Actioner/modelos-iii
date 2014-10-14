@@ -1,0 +1,1 @@
+(function(){function c(){}var a=c.prototype;var b=c;SCF.Commutator=c;b.init=function(){b.bindEvents()};b.bindEvents=function(){$(b.element).mousedown(function(){if($(this).hasClass("off")){$(this).removeClass("off").addClass("on")}else{$(this).addClass("off").removeClass("on")}})};b.element=".commutator"}());

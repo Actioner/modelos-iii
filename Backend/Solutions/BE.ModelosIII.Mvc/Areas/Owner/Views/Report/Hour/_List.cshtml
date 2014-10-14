@@ -1,0 +1,41 @@
+﻿@using BE.ModelosIII.Mvc.Models.Util
+@inherits MvcContrib.FluentHtml.ModelWebViewPage<IEnumerable<BE.ModelosIII.Mvc.Models.Report.MostSoldHourReportModel>>
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Horarios más vendidos</span>
+    </div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Horario</th>
+                    <th>Candidad Vendidas</th>
+                    <th>Cantidad Películas</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Horario</th>
+                    <th>Candidad Vendidas</th>
+                    <th>Cantidad Películas</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var reportModel in Model)
+                {
+                    <tr>
+                        <td>@reportModel.StartTime</td>
+                        <td>@reportModel.SoldTickets</td>
+                        <td>@reportModel.MovieQuantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
