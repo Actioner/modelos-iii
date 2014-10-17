@@ -258,4 +258,10 @@
   <data name="VerificationCode" xml:space="preserve">
     <value>Código de Verificación</value>
   </data>
+  <data name="BinSize" xml:space="preserve">
+    <value>Tamaño de Caja</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
 </root>
