@@ -98,31 +98,17 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Contracts\LongText.cs" />
-    <Compile Include="Contracts\Repositories\IPriceRepository.cs" />
-    <Compile Include="Contracts\Repositories\IPromotionRepository.cs" />
-    <Compile Include="Contracts\Repositories\IReservationRepository.cs" />
-    <Compile Include="Contracts\Repositories\IMultiplexRepository.cs" />
-    <Compile Include="Contracts\Repositories\IScreenRepository.cs" />
-    <Compile Include="Contracts\Repositories\IScreeningRepository.cs" />
-    <Compile Include="Contracts\Repositories\IMovieRepository.cs" />
-    <Compile Include="Contracts\Repositories\IRolRepository.cs" />
-    <Compile Include="Contracts\Repositories\IUserRepository.cs" />
+    <Compile Include="Contracts\Repositories\IScenarioRepository.cs" />
     <Compile Include="Contracts\TableName.cs" />
-    <Compile Include="Promotion.cs" />
-    <Compile Include="Price.cs" />
+    <Compile Include="Bin.cs" />
+    <Compile Include="BinItem.cs" />
+    <Compile Include="Population.cs" />
+    <Compile Include="Generation.cs" />
+    <Compile Include="Run.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="Scenario.cs" />
     <Compile Include="Helpers\Formatting.cs" />
-    <Compile Include="Reservation.cs" />
-    <Compile Include="Seat.cs" />
-    <Compile Include="Row.cs" />
-    <Compile Include="Rating.cs" />
-    <Compile Include="Genre.cs" />
-    <Compile Include="Screening.cs" />
-    <Compile Include="Movie.cs" />
-    <Compile Include="Screen.cs" />
-    <Compile Include="Multiplex.cs" />
-    <Compile Include="Role.cs" />
     <Compile Include="Settings\Settings.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

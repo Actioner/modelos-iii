@@ -160,22 +160,7 @@
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
-    <Compile Include="NHibernateMaps\Overrides\PromotionOverride.cs" />
-    <Compile Include="NHibernateMaps\Overrides\ReservationOverride.cs" />
-    <Compile Include="NHibernateMaps\Overrides\SeatOverride.cs" />
-    <Compile Include="NHibernateMaps\Overrides\RowOverride.cs" />
-    <Compile Include="NHibernateMaps\Overrides\ScreenOverride.cs" />
-    <Compile Include="NHibernateMaps\Overrides\ScreeningOverride.cs" />
-    <Compile Include="NHibernateMaps\Overrides\MovieOverride.cs" />
-    <Compile Include="Repositories\PriceRepository.cs" />
-    <Compile Include="Repositories\PromotionRepository.cs" />
-    <Compile Include="Repositories\ReservationRepository.cs" />
-    <Compile Include="Repositories\MultiplexRepository.cs" />
-    <Compile Include="Repositories\ScreenRepository.cs" />
-    <Compile Include="Repositories\ScreeningRepository.cs" />
-    <Compile Include="Repositories\MovieRepository.cs" />
-    <Compile Include="Repositories\RolRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\ScenarioRepository.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -209,7 +194,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NHibernateMaps\Overrides\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
