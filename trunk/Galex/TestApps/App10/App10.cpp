@@ -76,7 +76,7 @@ void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 
 		const Problems::BPP::BinFitness f = (const Problems::BPP::BinFitness&)population[ i ].GetFitness( Population::GaChromosomeStorage::GAFT_RAW );
 		ModDb::POPULATION population = ModDb::POPULATION();
-		population.GenerationId = generation.Id;
+		population.GenerationId = generation.GenerationId;
 		population.Number = i + 1;
 		population.Fitness = f.GetValue();
 		population.BinCount = chromosome.GetStructure().GetCount();
@@ -87,14 +87,14 @@ void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 			Problems::BPP::Bin bBin = bNode->GetValue();
 
 			ModDb::BIN bin = ModDb::BIN();
-			bin.PopulationId = population.Id;
+			bin.PopulationId = population.PopulationId;
 			bin.Filled = bBin.GetFill();
 			bin.Capacity = bBin.GetCapacity();
 			bin = ModDb::InsertBin(bin);
 
 			for( const Problems::BPP::Bin::ItemList::GaNodeType* iNode = bBin.GetItems().GetHead(); iNode != NULL; iNode = iNode->GetNext() ){
 				ModDb::BINITEM binItem = ModDb::BINITEM();
-				binItem.BinId = bin.Id;
+				binItem.BinId = bin.BinId;
 				binItem.Label = items[iNode->GetValue()]._label;
 				binItem.Size = items[iNode->GetValue()]._size;
 				ModDb::InsertBinItem(binItem);
@@ -111,7 +111,7 @@ int main(int argc, const char* argv[])
 	ModDb::Connect();
 
 	ModDb::SCENARIO scenario = ModDb::GetScenario(scenarioId);
-	std::vector<ModDb::ITEM> dbItems = ModDb::GetItems(scenario.Id);
+	std::vector<ModDb::ITEM> dbItems = ModDb::GetItems(scenario.ScenarioId);
 
 	GaInitialize();
 
@@ -193,7 +193,7 @@ int main(int argc, const char* argv[])
 		population.GetData().GetEventManager().AddEventHandler( Population::GaPopulation::GAPE_NEW_GENERATION, &newGenHandler );
 
 		ModDb::RUN run = ModDb::InsertRun(scenarioId);
-		runId = run.Id;
+		runId = run.RunId;
 
 		workflow.Start();
 		workflow.Wait();

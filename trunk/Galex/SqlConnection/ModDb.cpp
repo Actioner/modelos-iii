@@ -68,13 +68,13 @@ namespace ModDb
 	} BINDING;
 
 	typedef struct SCENARIO_BINDING {
-		int				Id;
+		int				ScenarioId;
 		std::string		Name;
 		float			BinSize;
 	} SCENARIO;
 
 	typedef struct ITEM_BINDING {
-		int				Id;
+		int				ItemId;
 		int				RunId;
 		std::string		Label;
 		int				Quantity;
@@ -82,21 +82,21 @@ namespace ModDb
 	} ITEM;
 
 	typedef struct BINITEM_BINDING {
-		int				Id;
+		int				BinItemId;
 		int				BinId;
 		std::string		Label;
 		float			Size;
 	} BINITEM;
 
 	typedef struct BIN_BINDING {
-		int				Id;
+		int				BinId;
 		int				PopulationId;
 		float			Filled;
 		float			Capacity;
 	} BIN;
 
 	typedef struct POPULATION_BINDING {
-		int				Id;
+		int				PopulationId;
 		int				GenerationId;
 		int				Number;
 		float			Fitness;
@@ -104,13 +104,13 @@ namespace ModDb
 	} POPULATION;
 
 	typedef struct GENERATION_BINDING {
-		int				Id;
+		int				GenerationId;
 		int				RunId;
 		int				Number;
 	} GENERATION;
 
 	typedef struct RUN_BINDING {
-		int				Id;
+		int				RunId;
 		int				ScenarioId;
 	} RUN;
 
@@ -173,149 +173,6 @@ namespace ModDb
 	SHORT   gHeight = 80;       // Users screen height
 	WCHAR* defaultConnectionString = L"Driver={SQL Server Native Client 11.0};Server=localhost\\SQLEXPRESS;Database=modelosIII;Trusted_Connection=yes;";
 	SQL_CONNECTION _sqlConnection;
-
-
-	/*int Original()
-	{
-	SQLHENV     hEnv = NULL;
-	SQLHDBC     hDbc = NULL;
-	SQLHSTMT    hStmt = NULL;
-	WCHAR*      pwszConnStr;
-	WCHAR       wszInput[SQL_QUERY_SIZE];
-
-	if (SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &hEnv) == SQL_ERROR)
-	{
-	fwprintf(stderr, L"Unable to allocate an environment handle\n");
-	exit(-1);
-	}
-	TRYODBC(hEnv,
-	SQL_HANDLE_ENV,
-	SQLSetEnvAttr(hEnv,
-	SQL_ATTR_ODBC_VERSION,
-	(SQLPOINTER)SQL_OV_ODBC3,
-	0));
-
-	TRYODBC(hEnv,
-	SQL_HANDLE_ENV,
-	SQLAllocHandle(SQL_HANDLE_DBC, hEnv, &hDbc));
-
-	pwszConnStr = defaultConnectionString;
-
-	TRYODBC(hDbc,
-	SQL_HANDLE_DBC,
-	SQLDriverConnect(hDbc,
-	GetDesktopWindow(),
-	pwszConnStr,
-	SQL_NTS,
-	NULL,
-	0,
-	NULL,
-	SQL_DRIVER_COMPLETE));
-
-	fwprintf(stderr, L"Connected!\n");
-
-	TRYODBC(hDbc,
-	SQL_HANDLE_DBC,
-	SQLAllocHandle(SQL_HANDLE_STMT, hDbc, &hStmt));
-
-	wprintf(L"Enter SQL commands, type (control)Z to exit\nSQL COMMAND>");
-
-	// Loop to get input and execute queries
-
-	while(_fgetts(wszInput, SQL_QUERY_SIZE-1, stdin))
-	{
-	RETCODE     RetCode;
-	SQLSMALLINT sNumResults;
-
-	// Execute the query
-
-	if (!(*wszInput))
-	{
-	wprintf(L"SQL COMMAND>");
-	continue;
-	}
-	RetCode = SQLExecDirect(hStmt,wszInput, SQL_NTS);
-
-	switch(RetCode)
-	{
-	case SQL_SUCCESS_WITH_INFO:
-	{
-	HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);
-	// fall through
-	}
-	case SQL_SUCCESS:
-	{
-	// If this is a row-returning query, display
-	// results
-	TRYODBC(hStmt,
-	SQL_HANDLE_STMT,
-	SQLNumResultCols(hStmt,&sNumResults));
-
-	if (sNumResults > 0)
-	{
-	DisplayResults(hStmt,sNumResults);
-	} 
-	else
-	{
-	SQLLEN cRowCount;
-
-	TRYODBC(hStmt,
-	SQL_HANDLE_STMT,
-	SQLRowCount(hStmt,&cRowCount));
-
-	if (cRowCount >= 0)
-	{
-	wprintf(L"%Id %s affected\n",
-	cRowCount,
-	cRowCount == 1 ? L"row" : L"rows");
-	}
-	}
-	break;
-	}
-
-	case SQL_ERROR:
-	{
-	HandleDiagnosticRecord(hStmt, SQL_HANDLE_STMT, RetCode);
-	break;
-	}
-
-	default:
-	fwprintf(stderr, L"Unexpected return code %hd!\n", RetCode);
-
-	}
-	TRYODBC(hStmt,
-	SQL_HANDLE_STMT,
-	SQLFreeStmt(hStmt, SQL_CLOSE));
-
-	wprintf(L"SQL COMMAND>");
-	}
-
-	Exit:
-
-	// Free ODBC handles and exit
-
-	if (hStmt)
-	{
-	SQLFreeHandle(SQL_HANDLE_STMT, hStmt);
-	}
-
-	if (hDbc)
-	{
-	SQLDisconnect(hDbc);
-	SQLFreeHandle(SQL_HANDLE_DBC, hDbc);
-	}
-
-	if (hEnv)
-	{
-	SQLFreeHandle(SQL_HANDLE_ENV, hEnv);
-	}
-
-	wprintf(L"\nDisconnected.");
-
-	return 0;
-
-	}*/
-
 
 	std::wstring s2ws(const std::string& str)
 	{
@@ -426,7 +283,7 @@ Exit:
 		SCENARIO result;
 
 		/*SQL_CONNECTION sqlConnection = Connect();*/
-		std::wstring s = std::wstring(L"SELECT * FROM Scenario WHERE Id=");
+		std::wstring s = std::wstring(L"SELECT * FROM Scenarios WHERE ScenarioId=");
 		s += std::wstring(std::to_wstring(id));
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());
 
@@ -466,7 +323,7 @@ Exit:
 					{
 						result = SCENARIO();
 						pThisBinding = pFirstBinding;
-						result.Id = wcstol(pThisBinding->wszBuffer, NULL, 10);
+						result.ScenarioId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 						pThisBinding = pThisBinding->sNext;
 						result.Name = ws2s(pThisBinding->wszBuffer);
 						pThisBinding = pThisBinding->sNext;
@@ -522,7 +379,7 @@ Exit:
 		std::vector<ITEM> results;
 
 		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SELECT * FROM Item WHERE ScenarioId=");
+		std::wstring s = std::wstring(L"SELECT * FROM Items WHERE ScenarioId=");
 		s += std::wstring(std::to_wstring(runId));
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());
 
@@ -563,7 +420,7 @@ Exit:
 						{
 							ITEM row = ITEM();
 							pThisBinding = pFirstBinding;
-							row.Id = wcstol(pThisBinding->wszBuffer, NULL, 10);
+							row.ItemId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 							pThisBinding = pThisBinding->sNext;
 							row.RunId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 							pThisBinding = pThisBinding->sNext;
@@ -628,7 +485,7 @@ Exit:
 		result.ScenarioId = scenarioId;
 
 		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO run(scenarioId) VALUES(");
+		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO runs(scenarioId) VALUES(");
 		s += std::wstring(std::to_wstring(scenarioId));
 		s += std::wstring(L");SELECT @@IDENTITY;");
 
@@ -671,7 +528,7 @@ Exit:
 					else
 					{
 						pThisBinding = pFirstBinding;
-						result.Id = wcstol(pThisBinding->wszBuffer, NULL, 10);
+						result.RunId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 					}
 
 					while (pFirstBinding)
@@ -726,7 +583,7 @@ Exit:
 		result.Number = generation.Number;
 
 		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO generation(runId,number) VALUES(");
+		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO generations(runId,number) VALUES(");
 		s += std::wstring(std::to_wstring(generation.RunId));
 		s += std::wstring(L",");
 		s += std::wstring(std::to_wstring(generation.Number));
@@ -771,7 +628,7 @@ Exit:
 					else
 					{
 						pThisBinding = pFirstBinding;
-						result.Id = wcstol(pThisBinding->wszBuffer, NULL, 10);
+						result.GenerationId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 					}
 
 					while (pFirstBinding)
@@ -828,7 +685,7 @@ Exit:
 		result.BinCount = population.BinCount;
 
 		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO population(generationId,number,fitness,binCount) VALUES(");
+		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO populations(generationId,number,fitness,binCount) VALUES(");
 		s += std::wstring(std::to_wstring(population.GenerationId));
 		s += std::wstring(L",");
 		s += std::wstring(std::to_wstring(population.Number));
@@ -877,7 +734,7 @@ Exit:
 					else
 					{
 						pThisBinding = pFirstBinding;
-						result.Id = wcstol(pThisBinding->wszBuffer, NULL, 10);
+						result.PopulationId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 					}
 
 					while (pFirstBinding)
@@ -933,7 +790,7 @@ Exit:
 		result.Capacity = bin.Capacity;
 
 		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO bin(populationId,filled,capacity) VALUES(");
+		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO bins(populationId,filled,capacity) VALUES(");
 		s += std::wstring(std::to_wstring(bin.PopulationId));
 		s += std::wstring(L",");
 		s += std::wstring(std::to_wstring(bin.Filled));
@@ -980,7 +837,7 @@ Exit:
 					else
 					{
 						pThisBinding = pFirstBinding;
-						result.Id = wcstol(pThisBinding->wszBuffer, NULL, 10);
+						result.BinId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 					}
 
 					while (pFirstBinding)
@@ -1036,7 +893,7 @@ Exit:
 		result.Size = binItem.Size;
 
 		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO binItem(binId,label,size) VALUES(");
+		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO binItems(binId,label,size) VALUES(");
 		s += std::wstring(std::to_wstring(binItem.BinId));
 		s += std::wstring(L",'");
 		s += std::wstring(s2ws(binItem.Label));
@@ -1083,7 +940,7 @@ Exit:
 					else
 					{
 						pThisBinding = pFirstBinding;
-						result.Id = wcstol(pThisBinding->wszBuffer, NULL, 10);
+						result.BinItemId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 					}
 
 					while (pFirstBinding)
