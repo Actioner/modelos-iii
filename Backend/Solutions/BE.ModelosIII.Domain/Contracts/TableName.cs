@@ -6,9 +6,9 @@ namespace BE.ModelosIII.Domain.Contracts
     {
         public string Value { get; private set; }
 
-        public TableNameAttribute(string multiplexes)
+        public TableNameAttribute(string value)
         {
-            this.Value = multiplexes;
+            this.Value = value;
         }
     }
 }
