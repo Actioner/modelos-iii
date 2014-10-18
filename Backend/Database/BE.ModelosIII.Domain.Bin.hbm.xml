@@ -1,0 +1,23 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="BE.ModelosIII.Domain.Bin, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Bins">
+    <id name="Id" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="BinId" />
+      <generator class="identity" />
+    </id>
+    <bag name="BinItems">
+      <key>
+        <column name="BinId" />
+      </key>
+      <one-to-many class="BE.ModelosIII.Domain.BinItem, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    </bag>
+    <property name="Filled" type="System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Filled" />
+    </property>
+    <property name="Capacity" type="System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Capacity" />
+    </property>
+    <many-to-one class="BE.ModelosIII.Domain.Population, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Population">
+      <column name="PopulationId" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

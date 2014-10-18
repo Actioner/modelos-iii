@@ -1,0 +1,20 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="BE.ModelosIII.Domain.Run, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Runs">
+    <id name="Id" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="RunId" />
+      <generator class="identity" />
+    </id>
+    <bag name="Generations">
+      <key>
+        <column name="RunId" />
+      </key>
+      <one-to-many class="BE.ModelosIII.Domain.Generation, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    </bag>
+    <property name="RunOn" type="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="RunOn" />
+    </property>
+    <many-to-one class="BE.ModelosIII.Domain.Scenario, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Scenario">
+      <column name="ScenarioId" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

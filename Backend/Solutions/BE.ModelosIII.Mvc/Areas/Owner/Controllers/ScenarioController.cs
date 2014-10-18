@@ -36,7 +36,7 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
         public ActionResult Index()
         {
             var scenarios = _scenarioRepository.GetAll();
-            var scenarioModels = _mappingEngine.Map<IList<ScenarioModel>>(scenarios);
+            var scenarioModels = _mappingEngine.Map<IList<ScenarioListModel>>(scenarios);
 
             ViewBag.Actions = new List<ActionModel>
                                   {

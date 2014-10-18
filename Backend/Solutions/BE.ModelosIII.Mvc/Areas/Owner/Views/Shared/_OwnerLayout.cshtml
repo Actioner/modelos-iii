@@ -6,52 +6,17 @@
 @section sidebar
 {
     <ul>
-        <li class=@(ViewBag.ControllerName == "multiplex" ? "current" : string.Empty) >
+        <li class=@(ViewBag.ControllerName == "scenario" ? "current" : string.Empty) >
             <a style="background-position: -118px -8px;"
                 href="javascript:void(0)" title="complejos">
-                <span>Complejos</span>
+                <span>Escenarios</span>
             </a>
              <ul class="dropdown">
-                    <li><a class="simple smronju" href="@Url.Action("Index", "Multiplex", null)" title="Complejos">
+                    <li><a class="simple smronju" href="@Url.Action("Index", "Scenario", null)" title="Complejos">
                         <span>Listar</span> </a></li>
-                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Multiplex", null)" title="Crear Complejo">
-                        <span>Agregar</span> </a></li>
+                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Scenario", null)" title="Crear Complejo">
+                        <span>Crear</span> </a></li>
             </ul>
-        </li>
-        <li class=@(ViewBag.ControllerName == "screening" ? "current" : string.Empty) >
-            <a style="background-position: -118px -438px;"
-                href="javascript:void(0)" title="funciones">
-                <span>Funciones</span>
-            </a>
-             <ul class="dropdown">
-                    <li><a class="simple smronju" href="@Url.Action("Index", "Screening", null)" title="Funciones">
-                        <span>Listar</span> </a></li>
-                    <li><a class="wizard-form smronju" href="@Url.Action("Assign", "Screening", null)" title="Asignar Función">
-                        <span>Asignar</span> </a></li>
-            </ul>
-        </li>
-        <li class=@(ViewBag.ControllerName == "movie" ? "current" : string.Empty) >
-            <a style="background-position: -118px -403px;" href="javascript:void(0)">
-                <span>Películas</span>
-            </a>
-            <ul class="dropdown">
-                    <li><a class="simple smronju" href="@Url.Action("Index", "Movie", null)" title="Películas">
-                        <span>Listar</span> </a></li>
-                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Movie", null)" title="Crear Película">
-                        <span>Agregar</span> </a></li>
-            </ul>
-        </li>
-        <li class=@(ViewBag.ControllerName == "ticket" ? "current" : string.Empty) >
-            <a style="background-position: -11px -115px;"
-                href="@Url.Action("Index", "Reservation", null)" title="reservas/compras">
-                <span>Reservas/Compras</span>
-            </a>
-        </li>
-        <li class=@(ViewBag.ControllerName == "price" ? "current" : string.Empty) >
-            <a style="background-position: -155px -151px;"
-                href="@Url.Action("Index", "Promotion", null)" title="precios">
-                <span>Precios/Promociones</span>
-            </a>
         </li>
         <li class=@(ViewBag.ControllerName == "report" ? "current" : string.Empty) >
             <a style="background-position: -12px -222px;"

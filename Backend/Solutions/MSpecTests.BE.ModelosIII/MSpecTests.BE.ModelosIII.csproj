@@ -125,7 +125,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Domain\Helpers\EnumHelperSpec.cs" />
-    <Compile Include="Infraestructure\Repositories\MovieRepositorySpec.cs" />
+    <Compile Include="Infraestructure\Repositories\ScenarioRepositorySpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE.ModelosIII.Domain\BE.ModelosIII.Domain.csproj">
