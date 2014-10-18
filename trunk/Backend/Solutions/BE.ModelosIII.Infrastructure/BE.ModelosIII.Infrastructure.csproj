@@ -149,7 +149,6 @@
     <Compile Include="Helpers\Formatter\NamedFormatter.cs" />
     <Compile Include="Helpers\Formatting.cs" />
     <Compile Include="Helpers\MimeTypeHelper.cs" />
-    <Compile Include="Helpers\PromotionCalculatorExtension.cs" />
     <Compile Include="Helpers\RandomGenerator.cs" />
     <Compile Include="Helpers\UrlExtensionHelper.cs" />
     <Compile Include="NHibernateMaps\AutomappingConfiguration.cs" />
@@ -160,6 +159,8 @@
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\RolRepository.cs" />
     <Compile Include="Repositories\ScenarioRepository.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

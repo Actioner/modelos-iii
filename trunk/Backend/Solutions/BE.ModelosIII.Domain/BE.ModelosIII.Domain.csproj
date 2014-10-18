@@ -98,10 +98,14 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Contracts\LongText.cs" />
+    <Compile Include="Contracts\Repositories\IUserRepository.cs" />
+    <Compile Include="Contracts\Repositories\IRolRepository.cs" />
     <Compile Include="Contracts\Repositories\IScenarioRepository.cs" />
     <Compile Include="Contracts\TableName.cs" />
     <Compile Include="Bin.cs" />
     <Compile Include="BinItem.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Role.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Generation.cs" />
     <Compile Include="Run.cs" />

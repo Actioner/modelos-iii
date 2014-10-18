@@ -1,0 +1,59 @@
+﻿@using BE.ModelosIII.Mvc.Models.Util
+@model IEnumerable<BE.ModelosIII.Mvc.Models.Scenario.ScenarioListModel>
+@{
+    ViewBag.Title = "Escenarios";
+    Layout = ViewBag.Layout;
+}
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Listado de Escenarios</span>
+    </div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tamaño de Caja</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tamaño de Caja</th>
+                    <th>Acciones</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var scenarioModel in Model)
+                {
+                    <tr>
+                        <td>@scenarioModel.Name</td>
+                        <td>@scenarioModel.BinSize</td>
+                        <td class="actions">
+                            <a class="edit" href="@Url.Action("Edit", new { Id = scenarioModel.Id })">
+                                <img alt="Edit" src="/Content/img/icons/pencil.png"></a>
+                            <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = scenarioModel.Id })">
+                                    <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
+                        </td>   
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" src="/Content/js/tables.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            initializeDataTableOnLoad('.datatable');
+        });
+    </script>
+}
