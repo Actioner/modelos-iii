@@ -232,6 +232,15 @@ namespace BE.ModelosIII.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Etiqueta.
+        /// </summary>
+        public static string Label {
+            get {
+                return ResourceManager.GetString("Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latitud.
         /// </summary>
         public static string Latitude {
@@ -322,6 +331,15 @@ namespace BE.ModelosIII.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cantidad.
+        /// </summary>
+        public static string Quantity {
+            get {
+                return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clasificación.
         /// </summary>
         public static string Rating {
@@ -390,6 +408,15 @@ namespace BE.ModelosIII.Resources {
         public static string Seats {
             get {
                 return ResourceManager.GetString("Seats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamaño.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
             }
         }
         

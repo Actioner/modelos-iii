@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using SharpArch.Domain.PersistenceSupport;
 using SharpArch.NHibernate.Web.Mvc;
+using BE.ModelosIII.Mvc.Models.Item;
+using BE.ModelosIII.Mvc.Validators.Scenario;
+using FluentValidation.Mvc;
 
 namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 {
@@ -56,22 +59,30 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 
         [HttpPost]
         [Transaction]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create(CreateScenarioCommand command)
         {
             if (ModelState.IsValid)
             {
                 _commandProcessor.Process(command);
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(new { success = true, isValid = true, action = Url.Action("Index") });
+                }   
                 return RedirectToAction("Index");
             }
 
             BindValues();
 
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { success = true, isValid = false, html = RenderPartialViewToString("_Create", command) });
+            }
             return View(command);
         }
 
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult View(int id)
         {
             var scenario = _scenarioRepository.Get(id);
             if (scenario == null)
@@ -85,20 +96,6 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
             return View(command);
         }
 
-        [HttpPost]
-        [Transaction]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditScenarioCommand command)
-        {
-            if (ModelState.IsValid)
-            {
-                _commandProcessor.Process(command);
-                return RedirectToAction("Index");
-            }
-            BindValues();
-
-            return View(command);
-        }
 
         [HttpGet]
         [Transaction]
@@ -109,8 +106,21 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult ValidateNewItem(ItemModel model)
+        {
+            BindValues();
+
+            var validator = new ItemValidator();
+            var result = validator.Validate(model);
+            result.AddToModelState(ModelState, (string)ViewBag.NewItemPrefix);
+
+            return Json(new { success = ModelState.IsValid, html = RenderPartialViewToString("_NewItem", model, (string)ViewBag.NewItemPrefix) });
+        }
+
         private void BindValues()
         {
+            ViewBag.NewItemPrefix = "NewItem";
         }
     }
 }

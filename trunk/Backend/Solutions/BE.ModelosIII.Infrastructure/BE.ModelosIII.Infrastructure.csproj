@@ -159,6 +159,8 @@
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
+    <Compile Include="NHibernateMaps\Overrides\ScenarioOverride.cs" />
+    <Compile Include="NHibernateMaps\Overrides\ItemOverride.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\RolRepository.cs" />
     <Compile Include="Repositories\ScenarioRepository.cs" />
@@ -195,9 +197,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NHibernateMaps\Overrides\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

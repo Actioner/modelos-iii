@@ -1,0 +1,22 @@
+﻿@model BE.ModelosIII.Tasks.Commands.Scenario.EditScenarioCommand
+
+@{
+    ViewBag.Title = "Ver Escenario - " + Model.Name;
+    Layout = ViewBag.Layout;
+}
+
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Ver Escenario</span>
+    </div>
+    <div class="utopia-widget-content">
+        @Html.Partial("_ViewForm", Model)
+    </div>
+</section>
+
+
+@section scripts {
+}
+@section css {
+}

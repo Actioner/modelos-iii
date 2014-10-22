@@ -264,4 +264,13 @@
   <data name="Items" xml:space="preserve">
     <value>Items</value>
   </data>
+  <data name="Label" xml:space="preserve">
+    <value>Etiqueta</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Cantidad</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
 </root>

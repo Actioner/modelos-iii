@@ -110,11 +110,13 @@
     <Compile Include="Commands\Scenario\DeleteScenarioCommand.cs" />
     <Compile Include="Commands\Scenario\CreateScenarioCommand.cs" />
     <Compile Include="Commands\Scenario\EditScenarioCommand.cs" />
+    <Compile Include="Commands\Scenario\ItemCommand.cs" />
     <Compile Include="Commands\Scenario\ScenarioCommand.cs" />
     <Compile Include="Commands\Security\LoginCommand.cs" />
     <Compile Include="Validators\Scenario\CreateOrEditScenarioValidator.cs" />
     <Compile Include="Validators\Scenario\CreateScenarioValidator.cs" />
     <Compile Include="Validators\Scenario\EditScenarioValidator.cs" />
+    <Compile Include="Validators\Scenario\ItemValidator.cs" />
     <Compile Include="Validators\Security\LoginValidator.cs" />
   </ItemGroup>
   <ItemGroup>
