@@ -1,28 +1,31 @@
-﻿@model BE.ModelosIII.Tasks.Commands.Scenario.CreateScenarioCommand
+﻿@using BE.ModelosIII.Mvc.Components.Url
+
+@model BE.ModelosIII.Tasks.Commands.Scenario.CreateScenarioCommand
 @{
     ViewBag.Title = "Crear Escenario";
     Layout = ViewBag.Layout;
 }
-<section class="utopia-widget">
-    <div class="utopia-widget-title">
-        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
-        <span>Crear Escenario</span>
-    </div>
-    <div class="row-fluid">
-		<div class="utopia-widget-content">
-	    	<div class="span12 utopia-form-freeSpace">
-		        @Html.Partial("_Form", Model)
-		    </div>
-		</div>
-	</div>
-</section>
+
+@Html.Partial("_Create")
+
 
 @section scripts {
-    <script type="text/javascript" src="/Content/fancybox/jquery.fancybox.pack.js"></script>
-    <script type="text/javascript" src="/Content/fancybox/helpers/jquery.fancybox-media.js"></script>
-    <script type="text/javascript" src="/Content/js/File/uploadFile.js"></script>
-    <script type="text/javascript" src="/Content/js/Movie/movie.js"></script>
+    <script type="text/javascript" src="/Content/js/Scenario/scenario.js"></script>
+     <script type="text/javascript">
+         $(function () {
+            var model = JSON.parse('@Html.Raw(Json.Encode(Model))');
+            var newItemUrl = '@Url.OwnerAction("ValidateNewItem", "Scenario", null)';
+            var newItemPrefix = '@ViewBag.NewItemPrefix';
+
+            var scenarioManager = new ScenarioManager({
+                newItemUrl: newItemUrl,
+                newItemPrefix: newItemPrefix,
+                model: model
+            });
+
+            scenarioManager.init();
+        });
+    </script>
 }
 @section css {
-    <link href="/Content/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
 }

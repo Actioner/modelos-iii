@@ -21,6 +21,7 @@ namespace BE.ModelosIII.Tasks.Validators.Scenario
                 .WithLocalizedMessage(() => ValidationMessages.AlreadyExists); ;
 
             RuleFor(x => x.BinSize)
+                .Cascade(CascadeMode.StopOnFirstFailure)
                 .GreaterThan(default(int))
                 .WithLocalizedName(() => PropertyNames.BinSize);
 
@@ -28,6 +29,7 @@ namespace BE.ModelosIII.Tasks.Validators.Scenario
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull()
                 .NotEmpty()
+                .SetCollectionValidator(new ItemValidator())
                 .WithLocalizedName(() => PropertyNames.Items);
         }
 

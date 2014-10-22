@@ -10,6 +10,6 @@ namespace BE.ModelosIII.Tasks.Commands.Scenario
         public int Id { get; set; }
         public string Name { get; set; }
         public float BinSize { get; set; }
-        public IList<Item> Items { get; set; }
+        public IList<ItemCommand> Items { get; set; }
     }
 }

@@ -1,0 +1,43 @@
+﻿@using MvcContrib.FluentHtml
+@using BE.ModelosIII.Resources
+@inherits ModelWebViewPage<BE.ModelosIII.Mvc.Models.Item.ItemModel>
+
+<div class="utopia-widget-title">
+    <span>Nuevo Item</span>
+</div>
+<div class="utopia-widget-content">
+    <div class="form-horizontal">
+        @Html.HiddenFor(m => m.Id)
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                @PropertyNames.Label</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Label, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Label, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                @PropertyNames.Quantity</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Quantity, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Quantity, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="inputError" class="control-label">
+                @PropertyNames.Size</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Size, new { @class = "span4" })
+                @Html.ValidationMessageFor(m => m.Size, null, new { @class = "help-inline" })
+            </div>
+        </div>
+        <br />
+        <div class="control-group box-button">
+            <div class="utopia-form-button">
+                <a data-action="reset" href="javascript:void(0)" class="btn span2">Cancelar</a>
+                <button data-action="save" type="submit" class="btn btn-primary span2">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,9 @@ namespace BE.ModelosIII.Tasks
             Mapper.CreateMap<CreateScenarioCommand, Scenario>();
             Mapper.CreateMap<EditScenarioCommand, Scenario>();
             Mapper.CreateMap<Scenario, EditScenarioCommand>();
+            Mapper.CreateMap<Item, ItemCommand>();
+            Mapper.CreateMap<ItemCommand, Item>()
+                .ForMember(dest => dest.Scenario, opt => opt.Ignore());
 
             Mapper.AssertConfigurationIsValid();
         }

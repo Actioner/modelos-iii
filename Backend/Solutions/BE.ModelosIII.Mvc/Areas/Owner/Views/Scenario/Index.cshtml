@@ -37,8 +37,8 @@
                         <td>@scenarioModel.Name</td>
                         <td>@scenarioModel.BinSize</td>
                         <td class="actions">
-                            <a class="edit" href="@Url.Action("Edit", new { Id = scenarioModel.Id })">
-                                <img alt="Edit" src="/Content/img/icons/pencil.png"></a>
+                            <a class="view" href="@Url.Action("View", new { Id = scenarioModel.Id })">
+                                <img alt="View" src="/Content/img/icons/eye.png"></a>
                             <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = scenarioModel.Id })">
                                     <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
                         </td>   

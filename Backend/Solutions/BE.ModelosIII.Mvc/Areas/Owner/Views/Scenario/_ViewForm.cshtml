@@ -1,0 +1,63 @@
+﻿@using BE.ModelosIII.Domain
+@using BE.ModelosIII.Infrastructure.Helpers
+@using BE.ModelosIII.Mvc.Models.Scenario
+@using MvcContrib.FluentHtml
+@inherits ModelWebViewPage<BE.ModelosIII.Tasks.Commands.Scenario.ScenarioCommand>
+
+
+<fieldset>
+    <section class="utopia-widget">
+        <div class="utopia-widget-title">
+            <span>General</span>
+        </div>
+        <div class="utopia-widget-content">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">
+                        Nombre</label>
+                    <label class="control-label span4">@Model.Name</label>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Tamaño de Caja</label>
+                    <label class="control-label span4">@Model.BinSize</label>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="utopia-widget">
+        <div class="utopia-widget-title">
+            <span>Items Disponibles</span>
+        </div>
+        <div class="utopia-widget-content">
+            <div class="form-horizontal">
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Etiqueta</th>
+                            <th>Cantidad</th>
+                            <th>Tamaño</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.Label</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Size</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <br />
+    <div class="control-group box-last">
+        <div class="utopia-form-button">
+            <a href="@Url.Action("Index")" class="btn span3">Volver</a>
+        </div>
+    </div>
+</fieldset>

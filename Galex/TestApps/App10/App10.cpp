@@ -107,7 +107,12 @@ Common::Observing::GaNonmemberEventHandler newGenHandler( MyHandler );
 
 int main(int argc, const char* argv[])
 {
-	scenarioId = 1;
+	if (argc < 2) {
+		std::cout << "Parametros incorrectos.\n";
+		exit(-1);
+	}
+	scenarioId = atoi(argv[1]);
+
 	ModDb::Connect();
 
 	ModDb::SCENARIO scenario = ModDb::GetScenario(scenarioId);
