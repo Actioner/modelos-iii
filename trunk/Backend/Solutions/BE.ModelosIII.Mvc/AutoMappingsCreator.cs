@@ -8,6 +8,12 @@ using BE.ModelosIII.Domain;
 using BE.ModelosIII.Infrastructure.Helpers;
 using BE.ModelosIII.Mvc.Components.Html;
 using BE.ModelosIII.Mvc.Models.Scenario;
+using BE.ModelosIII.Mvc.Models.Run;
+using BE.ModelosIII.Mvc.Models.BinItem;
+using BE.ModelosIII.Mvc.Models.Bin;
+using BE.ModelosIII.Mvc.Models.Population;
+using BE.ModelosIII.Mvc.Models.Generation;
+using BE.ModelosIII.Mvc.Models.Item;
 
 namespace BE.ModelosIII.Mvc
 {
@@ -22,9 +28,15 @@ namespace BE.ModelosIII.Mvc
 
 
             Mapper.CreateMap<Scenario, ScenarioListModel>();
+            Mapper.CreateMap<Scenario, ScenarioModel>();
+            Mapper.CreateMap<Item, ItemModel>();
 
-            Mapper.CreateMap<Scenario, ScenarioModel>()
-                .ForMember(dest => dest.Items, opt => opt.Ignore());
+            Mapper.CreateMap<Run, RunListItemModel>();
+            Mapper.CreateMap<Run, RunModel>();
+            Mapper.CreateMap<Generation, GenerationModel>();
+            Mapper.CreateMap<Population, PopulationModel>();
+            Mapper.CreateMap<Bin, BinModel>();
+            Mapper.CreateMap<BinItem, BinItemModel>();
 
             Mapper.AssertConfigurationIsValid();
         }

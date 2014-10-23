@@ -102,20 +102,25 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AutoMappingsCreator.cs" />
-    <Compile Include="CommandHandlers\Scenario\DeleteScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\Scenario\CreateScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\Scenario\EditScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\Scenario\ScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\Run\CreateScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\Run\DeleteScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\Run\ScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\Scenario\DeleteRunHandler.cs" />
+    <Compile Include="CommandHandlers\Scenario\CreateRunHandler.cs" />
+    <Compile Include="CommandHandlers\Scenario\RunHandler.cs" />
     <Compile Include="CommandResult.cs" />
+    <Compile Include="Commands\Run\CreateRunCommand.cs" />
+    <Compile Include="Commands\Run\DeleteRunCommand.cs" />
+    <Compile Include="Commands\Run\RunCommand.cs" />
     <Compile Include="Commands\Scenario\DeleteScenarioCommand.cs" />
     <Compile Include="Commands\Scenario\CreateScenarioCommand.cs" />
-    <Compile Include="Commands\Scenario\EditScenarioCommand.cs" />
     <Compile Include="Commands\Scenario\ItemCommand.cs" />
     <Compile Include="Commands\Scenario\ScenarioCommand.cs" />
     <Compile Include="Commands\Security\LoginCommand.cs" />
+    <Compile Include="Validators\Run\CreateOrEditRunValidator.cs" />
+    <Compile Include="Validators\Run\CreateRunValidator.cs" />
     <Compile Include="Validators\Scenario\CreateOrEditScenarioValidator.cs" />
     <Compile Include="Validators\Scenario\CreateScenarioValidator.cs" />
-    <Compile Include="Validators\Scenario\EditScenarioValidator.cs" />
     <Compile Include="Validators\Scenario\ItemValidator.cs" />
     <Compile Include="Validators\Security\LoginValidator.cs" />
   </ItemGroup>

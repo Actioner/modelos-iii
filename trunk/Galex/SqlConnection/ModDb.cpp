@@ -171,7 +171,7 @@ namespace ModDb
 #define PIPE                L'|'
 
 	SHORT   gHeight = 80;       // Users screen height
-	WCHAR* defaultConnectionString = L"Driver={SQL Server Native Client 11.0};Server=localhost\\SQLEXPRESS;Database=modelosIII;Trusted_Connection=yes;";
+	WCHAR* defaultConnectionString = L"Driver={SQL Server Native Client 11.0};Server=localhost\\SQLEXPRESS;Database=modelosIIIT;Trusted_Connection=yes;";
 	SQL_CONNECTION _sqlConnection;
 
 	std::wstring s2ws(const std::string& str)

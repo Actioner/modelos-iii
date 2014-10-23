@@ -1,0 +1,62 @@
+﻿@using BE.ModelosIII.Mvc.Models.Scenario
+@using MvcContrib.FluentHtml
+
+@inherits ModelWebViewPage<BE.ModelosIII.Mvc.Models.Run.RunSearchModel>
+
+<section class="utopia-widget">
+	<div class="utopia-widget-title">
+		<img class="utopia-widget-icon" src="/Content/img/icons/lightbulb.png">
+		<span>Filtros</span>
+	</div>
+    <div class="utopia-widget-content">
+        <div class="row-fluid">
+            @using (Html.BeginForm("Index", "Run", FormMethod.Post, new { @id = "searchForm", @class= "form-horizontal" }))
+            {
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Complejo:</label>
+                        <div class="controls">
+                              @(this.Select("ScenarioId")
+                                    .Options(((IList<ScenarioListModel>)ViewBag.Scenarios).ToDictionary(x => x.Id, x => x.Name))
+                                    .FirstOption(string.Empty)
+                                    .Selected(Model.ScenarioId)
+                                    .Class("span12 scenarioSelect"))
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Fecha desde:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Start, new { @class = "input-medium datepicker", @Value = Model.Start.HasValue ? Model.Start.Value.ToString("dd/MM/yyyy") : string.Empty })
+                            @Html.ValidationMessageFor(m => m.Start, null, new { @class = "help-inline" })
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Fecha hasta:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.End, new { @class = "input-medium datepicker", @Value = Model.End.HasValue ? Model.End.Value.ToString("dd/MM/yyyy") : string.Empty })
+                            @Html.ValidationMessageFor(m => m.End, null, new { @class = "help-inline" })
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="span12">
+                    <div class="control-group">
+                        <div class="utopia-form-button">
+                            <div class="utopia-all-button">
+                                <button href="javascript:void(0)" type="submit" class="btn btn-primary span4">
+                                    Filtrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

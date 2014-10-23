@@ -1,0 +1,77 @@
+﻿@using BE.ModelosIII.Domain
+@using BE.ModelosIII.Mvc.Models.Item
+@using BE.ModelosIII.Infrastructure.Helpers
+@using BE.ModelosIII.Mvc.Models.Scenario
+@using MvcContrib.FluentHtml
+
+@inherits ModelWebViewPage<BE.ModelosIII.Tasks.Commands.Scenario.ScenarioCommand>
+
+@using (Html.BeginForm((string)ViewBag.ActionName, "Scenario", FormMethod.Post, new { @id = "scenarioForm", @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <section class="utopia-widget">
+            <div class="utopia-widget-title">
+                <span>General</span>
+            </div>
+            <div class="utopia-widget-content">
+                <div class="form-horizontal">
+                    <div class="row-fluid">
+                        <div class="utopia-widget-content">
+                            <div class="span12 utopia-form-freeSpace">
+                                <div class="control-group">
+                                    <label for="inputError" class="control-label">
+                                        Nombre</label>
+                                    <div class="controls">
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "span4", maxlength = "255" })
+                                        @Html.ValidationMessageFor(m => m.Name, null, new { @class = "help-inline" })
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="inputError" class="control-label">
+                                        Tamaño de Caja</label>
+                                    <div class="controls">
+                                        @Html.TextBoxFor(m => m.BinSize, new { @class = "span4", maxlength = "255" })
+                                        @Html.ValidationMessageFor(m => m.BinSize, null, new { @class = "help-inline" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="utopia-widget">
+            <div class="utopia-widget-title">
+                <span>Items Disponibles</span>
+            </div>
+             <div class="utopia-widget-content">
+                <div class="row-fluid">
+                    <section class="utopia-widget span4 utopia-form-freeSpace">
+                        <div class="utopia-widget-title">
+                            <span>Items</span>
+                        </div>
+                        <div class="utopia-widget-content">
+                            <ul id="items" style="list-style: none"></ul>
+                            @Html.ValidationMessageFor(m => m.Items)
+                        </div>
+                    </section>
+                    <section id="newItem" class="utopia-widget span8 utopia-form-freeSpace">
+                        @Html.Partial("_NewItem", new ItemModel(), new ViewDataDictionary(Html.ViewDataContainer.ViewData)
+                        {
+                            TemplateInfo = new TemplateInfo { HtmlFieldPrefix = (string)ViewBag.NewItemPrefix }
+                        })
+                    </section>
+                </div>
+            </div>
+        </section>
+        <br />
+        <div class="control-group box-last">
+            <div class="utopia-form-button">
+                <a href="@Url.Action("Index")" class="btn span3">Cancelar</a>
+                <button href="javascript:void(0)" type="submit" class="btn btn-primary span3">Guardar</button>
+            </div>
+        </div>
+
+        @*@Html.AntiForgeryToken()*@
+    </fieldset>
+}

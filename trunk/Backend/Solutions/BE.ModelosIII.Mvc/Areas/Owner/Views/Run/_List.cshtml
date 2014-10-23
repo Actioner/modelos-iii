@@ -1,0 +1,47 @@
+﻿@using BE.CinemAR.Mvc.Models.Util
+@inherits MvcContrib.FluentHtml.ModelWebViewPage<IEnumerable<BE.ModelosIII.Mvc.Models.Run.RunListItemModel>>
+
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Listado de Soluciones</span>
+    </div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Escenario</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Escenario</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var runModel in Model)
+                {
+                    <tr>
+                        <td>@runModel.Scenario.Name</td>
+                        <td>@runModel.RunOn</td>
+                        <td class="actions">
+                          <a class="edit" data-original-title="Ver" href="@Url.Action("View", new { Id = model.Id })">
+                              <img alt="Ver" src="/Content/img/icons/eye.png"></a> 
+                           <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = model.Id })">
+                                    <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
+                        </td>   
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
