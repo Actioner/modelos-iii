@@ -159,8 +159,13 @@
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
+    <Compile Include="NHibernateMaps\Overrides\BinItemOverride.cs" />
+    <Compile Include="NHibernateMaps\Overrides\PopulationOverride.cs" />
+    <Compile Include="NHibernateMaps\Overrides\GenerationOverride.cs" />
+    <Compile Include="NHibernateMaps\Overrides\RunOverride.cs" />
     <Compile Include="NHibernateMaps\Overrides\ScenarioOverride.cs" />
     <Compile Include="NHibernateMaps\Overrides\ItemOverride.cs" />
+    <Compile Include="Repositories\RunRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\RolRepository.cs" />
     <Compile Include="Repositories\ScenarioRepository.cs" />

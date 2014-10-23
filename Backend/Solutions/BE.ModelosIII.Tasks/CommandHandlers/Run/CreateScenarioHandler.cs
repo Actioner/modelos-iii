@@ -5,18 +5,18 @@ using SharpArch.Domain.PersistenceSupport;
 
 namespace BE.ModelosIII.Tasks.CommandHandlers.Scenario
 {
-    public class EditScenarioHandler : ScenarioHandler<EditScenarioCommand>
+    public class CreateRunHandler : ScenarioHandler<CreateScenarioCommand>
     {
-        public EditScenarioHandler(
+        public CreateRunHandler(
                 IRepository<Domain.Scenario> scenarioRepository,
                 IMappingEngine mappingEngine)
             : base(scenarioRepository, mappingEngine)
         {
         }
 
-        protected override Domain.Scenario MapCommandToScenario(EditScenarioCommand command)
+        protected override Domain.Scenario MapCommandToScenario(CreateScenarioCommand command)
         {
-            return MappingEngine.Map(command, ScenarioRepository.Get(command.Id));
+            return MappingEngine.Map<Domain.Scenario>(command);
         }
     }
 }

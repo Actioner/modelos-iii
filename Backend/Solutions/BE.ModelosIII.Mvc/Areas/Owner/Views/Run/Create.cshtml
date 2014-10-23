@@ -1,0 +1,31 @@
+﻿@using BE.ModelosIII.Mvc.Components.Url
+
+@model BE.ModelosIII.Tasks.Commands.Scenario.CreateScenarioCommand
+@{
+    ViewBag.Title = "Crear Escenario";
+    Layout = ViewBag.Layout;
+}
+
+@Html.Partial("_Create")
+
+
+@section scripts {
+    <script type="text/javascript" src="/Content/js/Scenario/scenario.js"></script>
+     <script type="text/javascript">
+         $(function () {
+            var model = JSON.parse('@Html.Raw(Json.Encode(Model))');
+            var newItemUrl = '@Url.OwnerAction("ValidateNewItem", "Scenario", null)';
+            var newItemPrefix = '@ViewBag.NewItemPrefix';
+
+            var scenarioManager = new ScenarioManager({
+                newItemUrl: newItemUrl,
+                newItemPrefix: newItemPrefix,
+                model: model
+            });
+
+            scenarioManager.init();
+        });
+    </script>
+}
+@section css {
+}

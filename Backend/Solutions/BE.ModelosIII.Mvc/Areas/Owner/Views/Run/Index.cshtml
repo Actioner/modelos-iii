@@ -1,0 +1,37 @@
+﻿@using BE.ModelosIII.Infrastructure.Helpers
+@using BE.ModelosIII.Mvc.Models.Scenario
+@using MvcContrib.FluentHtml
+@inherits ModelWebViewPage<BE.ModelosIII.Mvc.Models.Run.RunListModel>
+@{
+    ViewBag.Title = "Soluciones";
+    Layout = ViewBag.Layout;
+}
+
+@Html.Partial("_Search", Model.RunSearch)
+@Html.Partial("_List", Model.Runs)
+
+@section scripts {
+    <script type="text/javascript" src="/Content/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/Content/js/tables.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            initializeDataTableOnLoad('.datatable');
+
+            $(".datepicker").datepicker({
+                format: "dd/mm/yyyy",
+                weekStart: 0,
+                language: "es"
+            }).on('changeDate', function(ev) {
+                date.hide();
+            }).data("datepicker");
+            
+            initializeSelect('.scenarioSelect', {
+                placeholder: "Seleccione un Escenario"
+            });
+        });
+    </script>
+}
+
+@section css {
+    <link href="/Content/styles/datepicker.css" rel="stylesheet" type="text/css" />
+}

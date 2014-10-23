@@ -4,11 +4,11 @@ using SharpArch.Domain.PersistenceSupport;
 
 namespace BE.ModelosIII.Tasks.CommandHandlers.Scenario
 {
-    public class DeleteScenarioHandler : ICommandHandler<DeleteScenarioCommand>
+    public class DeleteRunHandler : ICommandHandler<DeleteScenarioCommand>
     {
         private readonly IRepository<Domain.Scenario> _scenarioRepository;
 
-        public DeleteScenarioHandler(
+        public DeleteRunHandler(
             IRepository<Domain.Scenario> scenarioRepository)
         {
             _scenarioRepository = scenarioRepository;
