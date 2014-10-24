@@ -33,10 +33,21 @@ namespace BE.ModelosIII.Mvc
 
             Mapper.CreateMap<Run, RunListItemModel>();
             Mapper.CreateMap<Run, RunModel>();
+            Mapper.CreateMap<Run, RunViewModel>()
+                .ForMember(dest => dest.Population, opt => opt.Ignore());
+            Mapper.CreateMap<Run, RunViewModel>()
+                .ForMember(dest => dest.Population, opt => opt.Ignore());
+            Mapper.CreateMap<Run, RunViewModel>()
+                .ForMember(dest => dest.BinSize, opt => opt.MapFrom(src => src.Scenario.BinSize))
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Scenario.Items))
+                .ForMember(dest => dest.Population, opt => opt.Ignore());
             Mapper.CreateMap<Generation, GenerationModel>();
             Mapper.CreateMap<Population, PopulationModel>();
+            Mapper.CreateMap<Population, PopulationViewModel>();
             Mapper.CreateMap<Bin, BinModel>();
+            Mapper.CreateMap<Bin, BinViewModel>();
             Mapper.CreateMap<BinItem, BinItemModel>();
+            Mapper.CreateMap<BinItem, BinItemViewModel>();
 
             Mapper.AssertConfigurationIsValid();
         }

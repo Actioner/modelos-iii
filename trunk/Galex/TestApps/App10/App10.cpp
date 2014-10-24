@@ -92,7 +92,8 @@ void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 			bin.Capacity = bBin.GetCapacity();
 			bin = ModDb::InsertBin(bin);
 
-			for( const Problems::BPP::Bin::ItemList::GaNodeType* iNode = bBin.GetItems().GetHead(); iNode != NULL; iNode = iNode->GetNext() ){
+			for( const Problems::BPP::Bin::ItemList::GaNodeType* iNode = bBin.GetItems().GetHead(); iNode != NULL; iNode = iNode->GetNext() )
+			{
 				ModDb::BINITEM binItem = ModDb::BINITEM();
 				binItem.BinId = bin.BinId;
 				binItem.Label = items[iNode->GetValue()]._label;
@@ -209,5 +210,5 @@ int main(int argc, const char* argv[])
 	GaFinalize();
 
 	//std::cin.get();
-	return 0;
+	return runId;
 }

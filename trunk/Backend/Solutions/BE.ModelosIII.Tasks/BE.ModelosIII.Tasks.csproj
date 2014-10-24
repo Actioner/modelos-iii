@@ -109,6 +109,7 @@
     <Compile Include="CommandHandlers\Scenario\CreateRunHandler.cs" />
     <Compile Include="CommandHandlers\Scenario\RunHandler.cs" />
     <Compile Include="CommandResult.cs" />
+    <Compile Include="Commands\Run\RunScenarioCommand.cs" />
     <Compile Include="Commands\Run\CreateRunCommand.cs" />
     <Compile Include="Commands\Run\DeleteRunCommand.cs" />
     <Compile Include="Commands\Run\RunCommand.cs" />

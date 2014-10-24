@@ -75,7 +75,7 @@ namespace ModDb
 
 	typedef struct ITEM_BINDING {
 		int				ItemId;
-		int				RunId;
+		int				ScenarioId;
 		std::string		Label;
 		int				Quantity;
 		float			Size;
@@ -283,7 +283,7 @@ Exit:
 		SCENARIO result;
 
 		/*SQL_CONNECTION sqlConnection = Connect();*/
-		std::wstring s = std::wstring(L"SELECT * FROM Scenarios WHERE ScenarioId=");
+		std::wstring s = std::wstring(L"SELECT ScenarioId, Name, BinSize FROM Scenarios WHERE ScenarioId=");
 		s += std::wstring(std::to_wstring(id));
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());
 
@@ -324,8 +324,10 @@ Exit:
 						result = SCENARIO();
 						pThisBinding = pFirstBinding;
 						result.ScenarioId = wcstol(pThisBinding->wszBuffer, NULL, 10);
+
 						pThisBinding = pThisBinding->sNext;
 						result.Name = ws2s(pThisBinding->wszBuffer);
+
 						pThisBinding = pThisBinding->sNext;
 						result.BinSize = wcstod(pThisBinding->wszBuffer, NULL);
 					}
@@ -379,7 +381,7 @@ Exit:
 		std::vector<ITEM> results;
 
 		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SELECT * FROM Items WHERE ScenarioId=");
+		std::wstring s = std::wstring(L"SELECT ItemId, Label, Quantity, Size, ScenarioId FROM Items WHERE ScenarioId=");
 		s += std::wstring(std::to_wstring(runId));
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());
 
@@ -421,14 +423,18 @@ Exit:
 							ITEM row = ITEM();
 							pThisBinding = pFirstBinding;
 							row.ItemId = wcstol(pThisBinding->wszBuffer, NULL, 10);
-							pThisBinding = pThisBinding->sNext;
-							row.RunId = wcstol(pThisBinding->wszBuffer, NULL, 10);
+
 							pThisBinding = pThisBinding->sNext;
 							row.Label = ws2s(pThisBinding->wszBuffer);
+
 							pThisBinding = pThisBinding->sNext;
 							row.Quantity = wcstol(pThisBinding->wszBuffer, NULL, 10);
+
 							pThisBinding = pThisBinding->sNext;
 							row.Size = wcstod(pThisBinding->wszBuffer, NULL);
+
+							pThisBinding = pThisBinding->sNext;
+							row.ScenarioId = wcstol(pThisBinding->wszBuffer, NULL, 10);
 
 							results.push_back(row);
 						}
