@@ -234,10 +234,15 @@
     <Compile Include="Components\Infraestructure\CustomMultipartFormDataStreamProvider.cs" />
     <Compile Include="Components\Security\RequireHttpsAttribute.cs" />
     <Compile Include="Components\Url\UrlExtensions.cs" />
+    <Compile Include="Components\Utils\RunSolutionForScenario.cs" />
     <Compile Include="Models\BinItem\BinItemModel.cs" />
+    <Compile Include="Models\BinItem\BinItemViewModel.cs" />
     <Compile Include="Models\Bin\BinModel.cs" />
+    <Compile Include="Models\Bin\BinViewModel.cs" />
     <Compile Include="Models\Generation\GenerationModel.cs" />
+    <Compile Include="Models\Population\PopulationViewModel.cs" />
     <Compile Include="Models\Population\PopulationModel.cs" />
+    <Compile Include="Models\Run\RunViewModel.cs" />
     <Compile Include="Models\Run\RunListModel.cs" />
     <Compile Include="Models\Run\RunListItemModel.cs" />
     <Compile Include="Models\Run\RunModel.cs" />
@@ -1201,6 +1206,8 @@
     <Content Include="Areas\Owner\Views\Run\View.cshtml" />
     <Content Include="Areas\Owner\Views\Run\_Search.cshtml" />
     <Content Include="Areas\Owner\Views\Run\_List.cshtml" />
+    <Content Include="Areas\Owner\Views\Home\_PleaseWait.cshtml" />
+    <Content Include="Areas\Owner\Views\Home\_ErrorProcessing.cshtml" />
     <None Include="Content\js\jquery-vsdoc.js" />
     <Content Include="Content\js\jquery.adipoli.js" />
     <Content Include="Content\js\jquery.adipoli.min.js" />

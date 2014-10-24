@@ -15,6 +15,8 @@ using SharpArch.NHibernate.Web.Mvc;
 using BE.ModelosIII.Mvc.Models.Item;
 using FluentValidation.Mvc;
 using BE.ModelosIII.Mvc.Models.Scenario;
+using BE.ModelosIII.Mvc.Models.Population;
+using BE.ModelosIII.Mvc.Components.Utils;
 
 namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 {
@@ -23,17 +25,20 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
         private readonly ICommandProcessor _commandProcessor;
         private readonly IRunRepository _runRepository;
         private readonly IScenarioRepository _scenarioRepository;
+        private readonly IPopulationRepository _populationRepository;
         private readonly IMappingEngine _mappingEngine;
 
         public RunController(
             ICommandProcessor commandProcessor,
             IRunRepository runRepository,
             IScenarioRepository scenarioRepository,
+            IPopulationRepository populationRepository,
             IMappingEngine mappingEngine)
         {
             _commandProcessor = commandProcessor;
             _runRepository = runRepository;
             _scenarioRepository = scenarioRepository;
+            _populationRepository = populationRepository;
             _mappingEngine = mappingEngine;
         }
 
@@ -93,6 +98,34 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
             return View(command);
         }
 
+
+        [HttpGet]
+        public ActionResult Run(RunScenarioCommand command)
+        {
+            if (command.ScenarioId < 1 || _scenarioRepository.Get(command.ScenarioId) == null) 
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                }
+                return RedirectToAction("Index");
+            }
+
+            int runId = new RunSolutionForScenario().Execute(command.ScenarioId);
+            bool success = runId > 0;
+
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { success = success, runId = runId, redirectUrl = Url.Action("View", new { id = runId }) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (success)
+            {
+                return RedirectToAction("View", new { id = runId });
+            }
+            return RedirectToAction("Error", "Error");
+        }
+
         [HttpGet]
         public ActionResult View(int id)
         {
@@ -102,8 +135,11 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
                 return RedirectToAction("Index");
             }
 
+            var bestSolution = _populationRepository.FindBestByRun(run);
+
             BindValues();
-            var model = _mappingEngine.Map<Run, RunModel>(run);
+            var model = _mappingEngine.Map<Run, RunViewModel>(run);
+            model.Population = _mappingEngine.Map<Population, PopulationViewModel>(bestSolution);
 
             return View(model);
         }

@@ -18,6 +18,19 @@
                         <span>Crear</span> </a></li>
             </ul>
         </li>
+        
+        <li class=@(ViewBag.ControllerName == "run" ? "current" : string.Empty) >
+            <a style="background-position: -118px -8px;"
+                href="javascript:void(0)" title="complejos">
+                <span>Soluciones</span>
+            </a>
+             <ul class="dropdown">
+                    <li><a class="simple smronju" href="@Url.Action("Index", "Run", null)" title="Complejos">
+                        <span>Listar</span> </a></li>
+                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Run", null)" title="Crear Complejo">
+                        <span>Crear</span> </a></li>
+            </ul>
+        </li>
         <li class=@(ViewBag.ControllerName == "report" ? "current" : string.Empty) >
             <a style="background-position: -12px -222px;"
                href="javascript:void(0)" title="reportes">

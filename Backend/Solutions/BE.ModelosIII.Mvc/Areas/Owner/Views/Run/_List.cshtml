@@ -1,4 +1,5 @@
-﻿@using BE.CinemAR.Mvc.Models.Util
+﻿@using BE.ModelosIII.Mvc.Models.Util
+
 @inherits MvcContrib.FluentHtml.ModelWebViewPage<IEnumerable<BE.ModelosIII.Mvc.Models.Run.RunListItemModel>>
 
 <section class="utopia-widget">
@@ -34,9 +35,9 @@
                         <td>@runModel.Scenario.Name</td>
                         <td>@runModel.RunOn</td>
                         <td class="actions">
-                          <a class="edit" data-original-title="Ver" href="@Url.Action("View", new { Id = model.Id })">
+                          <a class="edit" data-original-title="Ver" href="@Url.Action("View", new { Id = runModel.Id })">
                               <img alt="Ver" src="/Content/img/icons/eye.png"></a> 
-                           <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = model.Id })">
+                           <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = runModel.Id })">
                                     <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
                         </td>   
                     </tr>

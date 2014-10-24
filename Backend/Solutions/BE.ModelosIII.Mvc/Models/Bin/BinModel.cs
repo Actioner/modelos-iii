@@ -9,8 +9,8 @@ namespace BE.ModelosIII.Mvc.Models.Bin
         public int Id { get; set; }
         public PopulationModel Population { get; set; }
         public IList<BinItemModel> BinItems { get; set; }
-        public virtual float Filled { get; set; }
-        public virtual float Capacity { get; set; }
+        public float Filled { get; set; }
+        public float Capacity { get; set; }
 
         public BinModel()
         {

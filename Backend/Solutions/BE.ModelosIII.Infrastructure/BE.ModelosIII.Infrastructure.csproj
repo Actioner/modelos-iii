@@ -165,6 +165,7 @@
     <Compile Include="NHibernateMaps\Overrides\RunOverride.cs" />
     <Compile Include="NHibernateMaps\Overrides\ScenarioOverride.cs" />
     <Compile Include="NHibernateMaps\Overrides\ItemOverride.cs" />
+    <Compile Include="Repositories\PopulationRepository.cs" />
     <Compile Include="Repositories\RunRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\RolRepository.cs" />

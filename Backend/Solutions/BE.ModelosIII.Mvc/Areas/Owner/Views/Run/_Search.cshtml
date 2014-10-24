@@ -15,7 +15,7 @@
                 <div class="span4">
                     <div class="control-group">
                         <label for="datepicker" class="control-label">
-                            Complejo:</label>
+                            Escenario:</label>
                         <div class="controls">
                               @(this.Select("ScenarioId")
                                     .Options(((IList<ScenarioListModel>)ViewBag.Scenarios).ToDictionary(x => x.Id, x => x.Name))

@@ -1,8 +1,8 @@
 ﻿@using BE.ModelosIII.Domain
 @using BE.ModelosIII.Infrastructure.Helpers
-@using BE.ModelosIII.Mvc.Models.Scenario
+@using BE.ModelosIII.Mvc.Models.Run
 @using MvcContrib.FluentHtml
-@inherits ModelWebViewPage<ScenarioModel>
+@inherits ModelWebViewPage<RunViewModel>
 
 
 <fieldset>
@@ -14,20 +14,25 @@
             <div class="form-horizontal">
                 <div class="control-group">
                     <label class="control-label">
-                        Nombre</label>
-                    <label class="control-label span4">@Model.Name</label>
+                        Escenario</label>
+                    <label class="control-label span4">@Model.ScenarioName</label>
                 </div>
                 <div class="control-group">
                     <label class="control-label">
                         Tamaño de Caja</label>
                     <label class="control-label span4">@Model.BinSize</label>
                 </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Fecha</label>
+                    <label class="control-label span4">@Model.RunOn</label>
+                </div>
             </div>
         </div>
     </section>
     <section class="utopia-widget">
         <div class="utopia-widget-title">
-            <span>Items Disponibles</span>
+            <span>Items</span>
         </div>
         <div class="utopia-widget-content">
             <div class="form-horizontal">
@@ -47,6 +52,54 @@
                                 <td>@item.Label</td>
                                 <td>@item.Quantity</td>
                                 <td>@item.Size</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section class="utopia-widget">
+        <div class="utopia-widget-title">
+            <span>Solución Encontrada</span>
+        </div>
+        <div class="utopia-widget-content">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">
+                        Fitness</label>
+                    <label class="control-label span4">@Model.Population.Fitness.ToString("N3")</label>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Cantidad de Cajas</label>
+                    <label class="control-label span4">@Model.Population.BinCount</label>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Caja #</th>
+                            <th>Tamaño Usado</th>
+                            <th>Porcentaje Usado</th>
+                            <th>Items</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int index = 0;}
+                        @foreach (var bin in Model.Population.Bins)
+                        {
+                            <tr>
+                                <td>@(++index)</td>
+                                <td>@bin.Filled.ToString("N2")</td>
+                                <td>@((bin.Filled / bin.Capacity).ToString("P"))</td>
+                                <td>
+                                    @foreach (var binItem in bin.Items)
+                                    {
+                                        @binItem
+                                        <br />
+                                    }
+
+                                </td>
                             </tr>
                         }
                     </tbody>

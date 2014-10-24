@@ -37,10 +37,14 @@
                         <td>@scenarioModel.Name</td>
                         <td>@scenarioModel.BinSize</td>
                         <td class="actions">
-                            <a class="view" href="@Url.Action("View", new { Id = scenarioModel.Id })">
-                                <img alt="View" src="/Content/img/icons/eye.png"></a>
-                            <a class="delete" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = scenarioModel.Id })">
-                                    <img alt="Delete" src="/Content/img/icons/trash_can.png"></a>
+                            <a class="edit runSolution" data-original-title="Encontrar Solución" data-href="@Url.Action("Run", "Run", new { ScenarioId = scenarioModel.Id })" href="javascript:void(0)">
+                                <img alt="Encontrar Solucion" src="~/Content/img/icons/play.png"></a>
+
+                            <a class="edit" data-original-title="Ver" href="@Url.Action("View", new { Id = scenarioModel.Id })">
+                                <img alt="Ver" src="/Content/img/icons/eye.png"></a>
+                            
+                            <a class="edit" data-original-title="Borrar" href="@Url.Action("Delete", new { Id = scenarioModel.Id })">
+                                    <img alt="Borrar" src="/Content/img/icons/trash_can.png"></a>
                         </td>   
                     </tr>
                 }
@@ -50,10 +54,49 @@
 </section>
 
 @section scripts {
+    <script type="text/javascript" src="/Content/fancybox/jquery.fancybox.pack.js"></script>
     <script type="text/javascript" src="/Content/js/tables.js"></script>
     <script type="text/javascript">
         $(function () {
             initializeDataTableOnLoad('.datatable');
+
+            var errorUrl = '@Url.Action("ErrorProcessing", "Home")';
+            var waitUrl = '@Url.Action("PleaseWait", "Home")';
+
+            $('.runSolution').click(function (ev)
+            {
+                ev.preventDefault();
+
+                $.fancybox({
+                    type: 'ajax',
+                    href: waitUrl,
+                    dataType: 'html',
+                    closeClick: false,
+                    closeBtn: false,
+                    helpers: {
+                        overlay: {
+                            closeClick: false
+                        }
+                    }
+                });
+
+                $.getJSON($(this).data('href'), function (result) {
+                    if (result.success) {
+                        window.location = result.redirectUrl;
+                    }
+                    else {
+                        $.fancybox({
+                            type: 'ajax',
+                            href: errorUrl,
+                            dataType: 'html'
+                        });
+                    }
+                });
+            });
         });
     </script>
+}
+
+@section css {
+    <link href="/Content/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
 }
