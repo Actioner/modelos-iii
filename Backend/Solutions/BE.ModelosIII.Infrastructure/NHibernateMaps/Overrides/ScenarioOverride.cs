@@ -14,12 +14,14 @@ namespace BE.ModelosIII.Infrastructure.NHibernateMaps.Overrides
         {
             mapping.HasMany(x => x.Items)
                 .Cascade
-                .AllDeleteOrphan();
+                .AllDeleteOrphan()
+                .Inverse();
 
 
             mapping.HasMany(x => x.Runs)
                 .Cascade
-                .AllDeleteOrphan();
+                .AllDeleteOrphan()
+                .Inverse();
         }
     }
 }

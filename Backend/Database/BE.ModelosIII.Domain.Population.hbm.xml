@@ -4,7 +4,7 @@
       <column name="PopulationId" />
       <generator class="identity" />
     </id>
-    <bag name="Bins">
+    <bag cascade="all-delete-orphan" name="Bins">
       <key>
         <column name="PopulationId" />
       </key>
@@ -19,7 +19,7 @@
     <property name="BinCount" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="BinCount" />
     </property>
-    <many-to-one class="BE.ModelosIII.Domain.Generation, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Generation">
+    <many-to-one cascade="none" class="BE.ModelosIII.Domain.Generation, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Generation">
       <column name="GenerationId" />
     </many-to-one>
   </class>

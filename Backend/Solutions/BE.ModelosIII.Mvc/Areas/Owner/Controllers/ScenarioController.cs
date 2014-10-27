@@ -14,6 +14,7 @@ using SharpArch.NHibernate.Web.Mvc;
 using BE.ModelosIII.Mvc.Models.Item;
 using BE.ModelosIII.Mvc.Validators.Scenario;
 using FluentValidation.Mvc;
+using BE.ModelosIII.Mvc.Controllers.Queries;
 
 namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 {
@@ -21,16 +22,19 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
     {
         private readonly ICommandProcessor _commandProcessor;
         private readonly IScenarioRepository _scenarioRepository;
+        private readonly IFastDeleter _fastDeleteQuery;
         private readonly IMappingEngine _mappingEngine;
 
         public ScenarioController(
             ICommandProcessor commandProcessor,
             IScenarioRepository scenarioRepository,
+            IFastDeleter fastDeleteQuery,
             IMappingEngine mappingEngine)
         {
 
             _commandProcessor = commandProcessor;
             _scenarioRepository = scenarioRepository;
+            _fastDeleteQuery = fastDeleteQuery;
             _mappingEngine = mappingEngine;
         }
 
@@ -102,7 +106,8 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
         [ValidateInput(false)]
         public ActionResult Delete(DeleteScenarioCommand command)
         {
-            _commandProcessor.Process(command);
+            //_commandProcessor.Process(command);
+            _fastDeleteQuery.DeleteScenario(command);
             return RedirectToAction("Index");
         }
 

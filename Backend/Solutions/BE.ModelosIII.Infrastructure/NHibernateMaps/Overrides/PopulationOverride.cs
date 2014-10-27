@@ -18,7 +18,8 @@ namespace BE.ModelosIII.Infrastructure.NHibernateMaps.Overrides
 
             mapping.HasMany(x => x.Bins)
               .Cascade
-              .AllDeleteOrphan();
+              .AllDeleteOrphan()
+              .Inverse();
         }
     }
 }

@@ -17,6 +17,7 @@ using FluentValidation.Mvc;
 using BE.ModelosIII.Mvc.Models.Scenario;
 using BE.ModelosIII.Mvc.Models.Population;
 using BE.ModelosIII.Mvc.Components.Utils;
+using BE.ModelosIII.Mvc.Controllers.Queries;
 
 namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 {
@@ -27,18 +28,21 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
         private readonly IScenarioRepository _scenarioRepository;
         private readonly IPopulationRepository _populationRepository;
         private readonly IMappingEngine _mappingEngine;
+        private readonly IFastDeleter _fastDeleteQuery;
 
         public RunController(
             ICommandProcessor commandProcessor,
             IRunRepository runRepository,
             IScenarioRepository scenarioRepository,
             IPopulationRepository populationRepository,
+            IFastDeleter fastDeleteQuery,
             IMappingEngine mappingEngine)
         {
             _commandProcessor = commandProcessor;
             _runRepository = runRepository;
             _scenarioRepository = scenarioRepository;
             _populationRepository = populationRepository;
+            _fastDeleteQuery = fastDeleteQuery;
             _mappingEngine = mappingEngine;
         }
 
@@ -150,7 +154,8 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
         [ValidateInput(false)]
         public ActionResult Delete(DeleteRunCommand command)
         {
-            _commandProcessor.Process(command);
+            //_commandProcessor.Process(command);
+            _fastDeleteQuery.DeleteRun(command);
             return RedirectToAction("Index");
         }
 

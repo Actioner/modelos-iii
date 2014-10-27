@@ -10,7 +10,7 @@
     <property name="Size" type="System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="Size" />
     </property>
-    <many-to-one class="BE.ModelosIII.Domain.Bin, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bin">
+    <many-to-one cascade="none" class="BE.ModelosIII.Domain.Bin, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Bin">
       <column name="BinId" />
     </many-to-one>
   </class>
