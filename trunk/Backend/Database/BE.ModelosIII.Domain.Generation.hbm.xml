@@ -4,7 +4,7 @@
       <column name="GenerationId" />
       <generator class="identity" />
     </id>
-    <bag name="Populations">
+    <bag cascade="all-delete-orphan" name="Populations">
       <key>
         <column name="GenerationId" />
       </key>
@@ -13,7 +13,7 @@
     <property name="Number" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="Number" />
     </property>
-    <many-to-one class="BE.ModelosIII.Domain.Run, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Run">
+    <many-to-one cascade="none" class="BE.ModelosIII.Domain.Run, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Run">
       <column name="RunId" />
     </many-to-one>
   </class>

@@ -72,7 +72,6 @@
       <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\Packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -102,12 +101,12 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AutoMappingsCreator.cs" />
-    <Compile Include="CommandHandlers\asa\CreateScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\asa\DeleteScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\asa\ScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\Scenario\DeleteRunHandler.cs" />
-    <Compile Include="CommandHandlers\Scenario\CreateRunHandler.cs" />
-    <Compile Include="CommandHandlers\Scenario\RunHandler.cs" />
+    <Compile Include="CommandHandlers\Scenario\CreateScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\Scenario\DeleteScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\Scenario\ScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\Run\DeleteRunHandler.cs" />
+    <Compile Include="CommandHandlers\Run\CreateRunHandler.cs" />
+    <Compile Include="CommandHandlers\Run\RunHandler.cs" />
     <Compile Include="CommandResult.cs" />
     <Compile Include="Commands\Run\RunScenarioCommand.cs" />
     <Compile Include="Commands\Run\CreateRunCommand.cs" />
@@ -158,6 +157,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

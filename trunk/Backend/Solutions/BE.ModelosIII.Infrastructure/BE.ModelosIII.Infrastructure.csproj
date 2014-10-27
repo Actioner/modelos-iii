@@ -160,6 +160,7 @@
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
     <Compile Include="NHibernateMaps\Overrides\BinItemOverride.cs" />
+    <Compile Include="NHibernateMaps\Overrides\BinOverride.cs" />
     <Compile Include="NHibernateMaps\Overrides\PopulationOverride.cs" />
     <Compile Include="NHibernateMaps\Overrides\GenerationOverride.cs" />
     <Compile Include="NHibernateMaps\Overrides\RunOverride.cs" />

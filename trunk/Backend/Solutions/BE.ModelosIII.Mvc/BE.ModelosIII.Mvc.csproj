@@ -235,6 +235,8 @@
     <Compile Include="Components\Security\RequireHttpsAttribute.cs" />
     <Compile Include="Components\Url\UrlExtensions.cs" />
     <Compile Include="Components\Utils\RunSolutionForScenario.cs" />
+    <Compile Include="Controllers\Queries\FastDeleter.cs" />
+    <Compile Include="Controllers\Queries\IFastDeleter.cs" />
     <Compile Include="Models\BinItem\BinItemModel.cs" />
     <Compile Include="Models\BinItem\BinItemViewModel.cs" />
     <Compile Include="Models\Bin\BinModel.cs" />
@@ -1416,7 +1418,6 @@
     <Folder Include="Areas\Owner\Models\" />
     <Folder Include="Content\images\" />
     <Folder Include="Content\img\products\" />
-    <Folder Include="Controllers\Queries\" />
     <Folder Include="Controllers\ViewModels\" />
     <Folder Include="Models\Report\" />
   </ItemGroup>
