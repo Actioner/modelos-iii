@@ -157,10 +157,10 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 
         private void BindIndexValues()
         {
-            ViewBag.Actions = new List<ActionModel>
-                                  {
-                                      new ActionModel("Crear", "Create", IconType.Create),
-                                  };
+            //ViewBag.Actions = new List<ActionModel>
+            //                      {
+            //                          new ActionModel("Crear", "Create", IconType.Create),
+            //                      };
 
             var scenarios = _scenarioRepository.GetAll().OrderBy(m => m.Name);
             ViewBag.Scenarios = _mappingEngine.Map<IList<ScenarioListModel>>(scenarios);

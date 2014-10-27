@@ -1208,6 +1208,7 @@
     <Content Include="Areas\Owner\Views\Run\_List.cshtml" />
     <Content Include="Areas\Owner\Views\Home\_PleaseWait.cshtml" />
     <Content Include="Areas\Owner\Views\Home\_ErrorProcessing.cshtml" />
+    <Content Include="Areas\Owner\Views\Home\Soon.cshtml" />
     <None Include="Content\js\jquery-vsdoc.js" />
     <Content Include="Content\js\jquery.adipoli.js" />
     <Content Include="Content\js\jquery.adipoli.min.js" />

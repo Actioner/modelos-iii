@@ -10,6 +10,12 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
             return View();
         }
 
+
+        public ActionResult Soon()
+        {
+            return View();
+        }
+
         public ActionResult PleaseWait()
         {
             return PartialView("_PleaseWait");

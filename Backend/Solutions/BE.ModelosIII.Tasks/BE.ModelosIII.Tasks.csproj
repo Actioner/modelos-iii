@@ -102,9 +102,9 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AutoMappingsCreator.cs" />
-    <Compile Include="CommandHandlers\Run\CreateScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\Run\DeleteScenarioHandler.cs" />
-    <Compile Include="CommandHandlers\Run\ScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\asa\CreateScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\asa\DeleteScenarioHandler.cs" />
+    <Compile Include="CommandHandlers\asa\ScenarioHandler.cs" />
     <Compile Include="CommandHandlers\Scenario\DeleteRunHandler.cs" />
     <Compile Include="CommandHandlers\Scenario\CreateRunHandler.cs" />
     <Compile Include="CommandHandlers\Scenario\RunHandler.cs" />

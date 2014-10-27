@@ -15,6 +15,11 @@ namespace BE.ModelosIII.Infrastructure.NHibernateMaps.Overrides
             mapping.HasMany(x => x.Items)
                 .Cascade
                 .AllDeleteOrphan();
+
+
+            mapping.HasMany(x => x.Runs)
+                .Cascade
+                .AllDeleteOrphan();
         }
     }
 }

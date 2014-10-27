@@ -16,7 +16,12 @@ namespace BE.ModelosIII.Tasks.CommandHandlers.Scenario
 
         protected override Domain.Scenario MapCommandToScenario(CreateScenarioCommand command)
         {
-            return MappingEngine.Map<Domain.Scenario>(command);
+            var scenario = MappingEngine.Map<Domain.Scenario>(command);
+            foreach (var item in scenario.Items)
+            {
+                item.Scenario = scenario;
+            }
+            return scenario;
         }
     }
 }

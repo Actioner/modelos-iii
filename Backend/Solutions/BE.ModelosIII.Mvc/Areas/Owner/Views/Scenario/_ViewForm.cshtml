@@ -58,6 +58,8 @@
     <div class="control-group box-last">
         <div class="utopia-form-button">
             <a href="@Url.Action("Index")" class="btn span3">Volver</a>
+            <a href="@Url.Action("Index", "Run", new { ScenarioId = Model.Id })" class="btn btn-warning span3">Ver soluciones</a>
+            <a data-href="@Url.Action("Run", "Run", new { ScenarioId = Model.Id })" href="javascript:void(0)" class="btn btn-primary span3 runSolution">Encontrar solución</a>
         </div>
     </div>
 </fieldset>
