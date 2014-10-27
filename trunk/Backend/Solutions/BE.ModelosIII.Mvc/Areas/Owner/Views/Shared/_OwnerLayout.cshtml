@@ -12,36 +12,36 @@
                 <span>Escenarios</span>
             </a>
              <ul class="dropdown">
-                    <li><a class="simple smronju" href="@Url.Action("Index", "Scenario", null)" title="Complejos">
+                    <li><a class="simple smronju" href="@Url.Action("Index", "Scenario", null)" title="Escenario">
                         <span>Listar</span> </a></li>
-                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Scenario", null)" title="Crear Complejo">
+                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Scenario", null)" title="Crear Escenario">
                         <span>Crear</span> </a></li>
             </ul>
         </li>
         
         <li class=@(ViewBag.ControllerName == "run" ? "current" : string.Empty) >
-            <a style="background-position: -118px -8px;"
-                href="javascript:void(0)" title="complejos">
+            <a style="background-position: -46px -258px;"
+                 href="@Url.Action("Index", "Run", null)" title="soluciones">
                 <span>Soluciones</span>
             </a>
-             <ul class="dropdown">
-                    <li><a class="simple smronju" href="@Url.Action("Index", "Run", null)" title="Complejos">
+             @*<ul class="dropdown">
+                    <li><a class="simple smronju" href="@Url.Action("Index", "Run", null)" title="Soluciones">
                         <span>Listar</span> </a></li>
-                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Run", null)" title="Crear Complejo">
-                        <span>Crear</span> </a></li>
-            </ul>
+                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Run", null)" title="Crear Solucion">
+                        <span>Encontrar</span> </a></li>
+            </ul>*@
         </li>
         <li class=@(ViewBag.ControllerName == "report" ? "current" : string.Empty) >
             <a style="background-position: -12px -222px;"
-               href="javascript:void(0)" title="reportes">
+               href="@Url.Action("Soon", "Home", null)" title="reportes">
                 <span>Reportes</span>
             </a>
-              <ul class="dropdown">
+            @*  <ul class="dropdown">
                 <li><a class="simple smronju" href="@Url.Action("MostSoldHour", "Report", null)" title="Horarios más vendidos">
                     <span>Horarios más vendidos</span> </a></li>
                 <li><a class="simple smronju" href="@Url.Action("MostSoldMovie", "Report", null)" title="Películas más vendidas">
                     <span>Películas más vendidas</span> </a></li>
-            </ul>
+            </ul>*@
         </li>
     </ul>
 }

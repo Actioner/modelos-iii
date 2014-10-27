@@ -17,6 +17,44 @@
 
 
 @section scripts {
+    <script type="text/javascript" src="/Content/fancybox/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var errorUrl = '@Url.Action("ErrorProcessing", "Home")';
+            var waitUrl = '@Url.Action("PleaseWait", "Home")';
+
+            $('.runSolution').click(function (ev) {
+                ev.preventDefault();
+
+                $.fancybox({
+                    type: 'ajax',
+                    href: waitUrl,
+                    dataType: 'html',
+                    closeClick: false,
+                    closeBtn: false,
+                    helpers: {
+                        overlay: {
+                            closeClick: false
+                        }
+                    }
+                });
+
+                $.getJSON($(this).data('href'), function (result) {
+                    if (result.success) {
+                        window.location = result.redirectUrl;
+                    }
+                    else {
+                        $.fancybox({
+                            type: 'ajax',
+                            href: errorUrl,
+                            dataType: 'html'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 }
 @section css {
+    <link href="/Content/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
 }

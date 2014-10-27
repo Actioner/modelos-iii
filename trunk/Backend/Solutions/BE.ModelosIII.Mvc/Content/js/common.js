@@ -71,7 +71,7 @@ var initializeDataTableOnLoad = function (jQuerySelector, options, eventdelete) 
                 $(".actions .delete").click(function (ev) {
                     var self = this;
                     ev.preventDefault();
-                    jConfirm("Desea borrar?", "Confirmación de borrado", function (result) {
+                    jConfirm("¿Seguro que desea borrar?", "Confirmación de borrado", function (result) {
                         if (result) {
                             window.location = $(self).attr('href');
                         }

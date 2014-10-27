@@ -15,7 +15,8 @@ namespace BE.ModelosIII.Tasks
         {
             Mapper.CreateMap<Entity, int>().ConvertUsing(entity => entity.Id);
 
-            Mapper.CreateMap<CreateScenarioCommand, Scenario>();
+            Mapper.CreateMap<CreateScenarioCommand, Scenario>()
+                .ForMember(dest => dest.Runs, opt => opt.Ignore());
             Mapper.CreateMap<Item, ItemCommand>();
             Mapper.CreateMap<ItemCommand, Item>()
                 .ForMember(dest => dest.Scenario, opt => opt.Ignore());

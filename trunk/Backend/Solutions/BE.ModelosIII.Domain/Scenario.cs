@@ -10,5 +10,6 @@ namespace BE.ModelosIII.Domain
         public virtual string Name { get; set; }
         public virtual float BinSize { get; set; }
         public virtual IList<Item> Items { get; set; }
+        public virtual IList<Run> Runs { get; set; }
     }
 }
