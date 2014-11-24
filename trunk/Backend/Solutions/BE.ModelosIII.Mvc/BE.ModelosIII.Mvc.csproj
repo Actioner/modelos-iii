@@ -175,9 +175,8 @@
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.0\lib\net40\System.Web.Optimization.dll</HintPath>
@@ -229,6 +228,7 @@
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\IAuthController.cs" />
     <Compile Include="Areas\Api\Models\ApiResponse.cs" />
+    <Compile Include="Areas\Owner\Controllers\ReportController.cs" />
     <Compile Include="Areas\Owner\Controllers\RunController.cs" />
     <Compile Include="Areas\Owner\Controllers\HomeController.cs" />
     <Compile Include="Components\Infraestructure\CustomMultipartFormDataStreamProvider.cs" />
@@ -237,6 +237,8 @@
     <Compile Include="Components\Utils\RunSolutionForScenario.cs" />
     <Compile Include="Controllers\Queries\FastDeleter.cs" />
     <Compile Include="Controllers\Queries\IFastDeleter.cs" />
+    <Compile Include="Controllers\Queries\IGenerationReportQuery.cs" />
+    <Compile Include="Controllers\Queries\GenerationReportQuery.cs" />
     <Compile Include="Models\BinItem\BinItemModel.cs" />
     <Compile Include="Models\BinItem\BinItemViewModel.cs" />
     <Compile Include="Models\Bin\BinModel.cs" />
@@ -244,6 +246,8 @@
     <Compile Include="Models\Generation\GenerationModel.cs" />
     <Compile Include="Models\Population\PopulationViewModel.cs" />
     <Compile Include="Models\Population\PopulationModel.cs" />
+    <Compile Include="Models\Report\GenerationReportListModel.cs" />
+    <Compile Include="Models\Report\GenerationReportModel.cs" />
     <Compile Include="Models\Run\RunViewModel.cs" />
     <Compile Include="Models\Run\RunListModel.cs" />
     <Compile Include="Models\Run\RunListItemModel.cs" />
@@ -1187,14 +1191,9 @@
     <Content Include="Areas\Owner\Views\Scenario\Index.cshtml" />
     <Content Include="Areas\Owner\Views\Scenario\Create.cshtml" />
     <Content Include="Areas\Owner\Views\Scenario\View.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Hour\Index.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Hour\_Search.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Hour\_List.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Hour\_Chart.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Movie\_Chart.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Movie\_List.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Movie\_Search.cshtml" />
-    <Content Include="Areas\Owner\Views\Report\Movie\Index.cshtml" />
+    <Content Include="Areas\Owner\Views\Report\Index.cshtml" />
+    <Content Include="Areas\Owner\Views\Report\_List.cshtml" />
+    <Content Include="Areas\Owner\Views\Report\_Chart.cshtml" />
     <Content Include="Areas\Owner\Views\Shared\Paged\_Paged.cshtml" />
     <Content Include="Areas\Owner\Views\Shared\_OwnerLayout.cshtml" />
     <Content Include="Areas\Owner\Views\Scenario\_ViewForm.cshtml" />
@@ -1206,11 +1205,13 @@
     <Content Include="Areas\Owner\Views\Run\Create.cshtml" />
     <Content Include="Areas\Owner\Views\Run\Index.cshtml" />
     <Content Include="Areas\Owner\Views\Run\View.cshtml" />
-    <Content Include="Areas\Owner\Views\Run\_Search.cshtml" />
+    <Content Include="Areas\Owner\Views\Shared\Search\_Search.cshtml" />
     <Content Include="Areas\Owner\Views\Run\_List.cshtml" />
     <Content Include="Areas\Owner\Views\Home\_PleaseWait.cshtml" />
     <Content Include="Areas\Owner\Views\Home\_ErrorProcessing.cshtml" />
     <Content Include="Areas\Owner\Views\Home\Soon.cshtml" />
+    <Content Include="Areas\Owner\Views\Shared\Configuration\_Configuration.cshtml" />
+    <Content Include="Areas\Owner\Views\Shared\Search\_GenerationReportSearch.cshtml" />
     <None Include="Content\js\jquery-vsdoc.js" />
     <Content Include="Content\js\jquery.adipoli.js" />
     <Content Include="Content\js\jquery.adipoli.min.js" />
@@ -1373,8 +1374,11 @@
     <Content Include="Content\styles\weather.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="README.txt" />
     <Content Include="Content\js\modernizr-2.6.2.js" />
+    <Content Include="Content\js\moment\moment-with-locales.js" />
+    <Content Include="Content\js\moment\moment-with-locales.min.js" />
+    <Content Include="Content\js\moment\moment.js" />
+    <Content Include="Content\js\moment\moment.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="uploads\posters\backtothefuture.jpg" />
     <Content Include="uploads\posters\backtothefuturesmall.jpg" />
@@ -1410,6 +1414,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Shared\Util\_FileUpload.cshtml" />
+    <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="Properties\PublishProfiles\test.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -1419,7 +1424,6 @@
     <Folder Include="Content\images\" />
     <Folder Include="Content\img\products\" />
     <Folder Include="Controllers\ViewModels\" />
-    <Folder Include="Models\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

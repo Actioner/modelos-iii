@@ -6,6 +6,7 @@
 
 
 <fieldset>
+    @Html.Hidden("ScenarioId", Model.Id)
     <section class="utopia-widget">
         <div class="utopia-widget-title">
             <span>General</span>
@@ -54,6 +55,10 @@
             </div>
         </div>
     </section>
+    @Html.Partial("Configuration/_Configuration", Model.Configuration, new ViewDataDictionary(Html.ViewDataContainer.ViewData)
+        {
+            TemplateInfo = new TemplateInfo { HtmlFieldPrefix = "Configuration" }
+        })
     <br />
     <div class="control-group box-last">
         <div class="utopia-form-button">

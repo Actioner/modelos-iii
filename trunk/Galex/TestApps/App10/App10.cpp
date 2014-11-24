@@ -45,7 +45,9 @@ Population::CouplingOperations::GaSimpleCoupling coupling;
 Population::ReplacementOperations::GaWorstReplacement replacement;
 Population::ScalingOperations::GaNoScaling scaling;
 
-Algorithm::StopCriteria::GaStatsChangesCriterion stopCriterion;
+Algorithm::StopCriteria::GaStatsChangesCriterion statsChangesStopCriterion;
+Algorithm::StopCriteria::GaGenerationCriterion generationStopCriterion;
+
 
 int scenarioId;
 int runId;
@@ -59,8 +61,8 @@ void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 
 	const Statistics::GaStatistics& stats = population.GetStatistics();
 
-	if( stats.GetCurrentGeneration() != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
-		return;
+	/*if( stats.GetCurrentGeneration() != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
+		return;*/
 
 	const Common::Data::GaSingleDimensionArray<Problems::BPP::BinConfigBlock::Item>& items = ccb.GetItems();
 
@@ -136,8 +138,8 @@ int main(int argc, const char* argv[])
 		}
 
 		Chromosome::GaMatingConfig matingConfiguration(
-			Chromosome::GaCrossoverSetup( &crossover, &Chromosome::GaCrossoverParams( 1.0f, 2 ), NULL ),
-			Chromosome::GaMutationSetup( &mutation, &Chromosome::GaMutationSizeParams( 0.66f, true, 2L ), NULL ) );
+			Chromosome::GaCrossoverSetup( &crossover, &Chromosome::GaCrossoverParams(scenario.CrossoverProbability, 2 ), NULL ),
+			Chromosome::GaMutationSetup( &mutation, &Chromosome::GaMutationSizeParams(scenario.MutationProbability, true, 2L ), NULL ) );
 
 		Chromosome::GaInitializatorSetup initializatorSetup( &initializator, NULL, &Chromosome::GaInitializatorConfig(
 			&Problems::BPP::BinConfigBlock( items, scenario.BinSize ) ) );
@@ -164,7 +166,7 @@ int main(int argc, const char* argv[])
 			Population::GaPopulationFitnessOperationSetup( &populationFitnessOperation, &Problems::BPP::BinFitnessOperationParams( 2 ),
 			&Fitness::GaFitnessOperationConfig( NULL ) ),
 			fitnessComparatorSetup,
-			Population::GaPopulationParams( 100, 0, Population::GaPopulationParams::GAPFO_FILL_ON_INIT ),
+			Population::GaPopulationParams(scenario.PopulationSize, 0, Population::GaPopulationParams::GAPFO_FILL_ON_INIT ),
 			trackers,
 			Chromosome::GaMatingSetup(),
 			selectionSetup,
@@ -182,11 +184,19 @@ int main(int argc, const char* argv[])
 		simpleGA.Connect( workflow.GetFirstStep(), br1 );
 
 		Common::Workflows::GaBranchGroup* bg1 = (Common::Workflows::GaBranchGroup*)workflow.ConnectSteps( br1, workflow.GetLastStep(), 0 );
-
-		Algorithm::StopCriteria::GaStopCriterionStep* stopStep = new Algorithm::StopCriteria::GaStopCriterionStep(
-			Algorithm::StopCriteria::GaStopCriterionSetup( &stopCriterion,
-			&Algorithm::StopCriteria::GaStatsChangesCriterionParams(
-			Population::GADV_BEST_FITNESS, 100), NULL ), workflow.GetWorkflowData(), WDID_POPULATION_STATS );
+		
+		Algorithm::StopCriteria::GaStopCriterionStep* stopStep;
+		if (scenario.StopCriterion == "StatsChange") {
+			stopStep = new Algorithm::StopCriteria::GaStopCriterionStep(
+				Algorithm::StopCriteria::GaStopCriterionSetup(&statsChangesStopCriterion,
+				&Algorithm::StopCriteria::GaStatsChangesCriterionParams(
+				Population::GADV_BEST_FITNESS, scenario.StopDepth), NULL), workflow.GetWorkflowData(), WDID_POPULATION_STATS);
+		}
+		else {
+			stopStep = new Algorithm::StopCriteria::GaStopCriterionStep(
+				Algorithm::StopCriteria::GaStopCriterionSetup(&generationStopCriterion,
+				&Algorithm::StopCriteria::GaGenerationCriterionParams(scenario.StopDepth), NULL), workflow.GetWorkflowData(), WDID_POPULATION_STATS);
+		}
 
 		Common::Workflows::GaBranchGroupTransition* bt1 = new Common::Workflows::GaBranchGroupTransition();
 
@@ -198,7 +208,15 @@ int main(int argc, const char* argv[])
 
 		population.GetData().GetEventManager().AddEventHandler( Population::GaPopulation::GAPE_NEW_GENERATION, &newGenHandler );
 
-		ModDb::RUN run = ModDb::InsertRun(scenarioId);
+		ModDb::RUN run;
+		run.ScenarioId = scenario.ScenarioId;
+		run.CrossoverProbability = scenario.CrossoverProbability;
+		run.MutationProbability = scenario.MutationProbability;
+		run.PopulationSize = scenario.PopulationSize;
+		run.StopCriterion = scenario.StopCriterion;
+		run.StopDepth = scenario.StopDepth;
+		
+		run = ModDb::InsertRun(run);
 		runId = run.RunId;
 
 		workflow.Start();

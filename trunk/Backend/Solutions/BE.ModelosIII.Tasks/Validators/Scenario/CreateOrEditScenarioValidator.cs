@@ -31,6 +31,9 @@ namespace BE.ModelosIII.Tasks.Validators.Scenario
                 .NotEmpty()
                 .SetCollectionValidator(new ItemValidator())
                 .WithLocalizedName(() => PropertyNames.Items);
+
+            RuleFor(x => x.Configuration)
+                .SetValidator(new ConfigurationValidator());
         }
 
         public abstract bool BeUnique(T command);

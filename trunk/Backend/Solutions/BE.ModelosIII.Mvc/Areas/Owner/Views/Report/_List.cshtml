@@ -1,0 +1,44 @@
+﻿@using BE.ModelosIII.Mvc.Models.Util
+@inherits MvcContrib.FluentHtml.ModelWebViewPage<IEnumerable<BE.ModelosIII.Mvc.Models.Report.GenerationReportModel>>
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/paragraph_justify.png">
+        <span>Horarios más vendidos</span>
+    </div>
+    <div class="utopia-widget-content">
+        @if (ViewBag.Actions != null)
+        {
+            @Html.Partial("_Actions", (IEnumerable<ActionModel>)ViewBag.Actions)
+        }
+           
+        <table class="table datatable table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Generación</th>
+                    <th>Mejor Fitness</th>
+                    <th>Fitness Promedio</th>
+                    <th>Peor Fitness</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Generación</th>
+                    <th>Mejor Fitness</th>
+                    <th>Fitness Promedio</th>
+                    <th>Peor Fitness</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var reportModel in Model)
+                {
+                    <tr>
+                        <td>@reportModel.Number</td>
+                        <td>@reportModel.Best</td>
+                        <td>@reportModel.Average</td>
+                        <td>@reportModel.Worst</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

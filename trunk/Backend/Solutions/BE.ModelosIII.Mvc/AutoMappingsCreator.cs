@@ -14,6 +14,7 @@ using BE.ModelosIII.Mvc.Models.Bin;
 using BE.ModelosIII.Mvc.Models.Population;
 using BE.ModelosIII.Mvc.Models.Generation;
 using BE.ModelosIII.Mvc.Models.Item;
+using BE.ModelosIII.Mvc.Models.Report;
 
 namespace BE.ModelosIII.Mvc
 {
@@ -28,7 +29,15 @@ namespace BE.ModelosIII.Mvc
 
 
             Mapper.CreateMap<Scenario, ScenarioListModel>();
-            Mapper.CreateMap<Scenario, ScenarioModel>();
+            Mapper.CreateMap<Scenario, ScenarioModel>()
+                .ForMember(dest => dest.Configuration, opt => opt.Ignore())
+                .AfterMap((s, sm) => {
+                    sm.Configuration.CrossoverProbability = s.CrossoverProbability * 100;
+                    sm.Configuration.MutationProbability = s.MutationProbability * 100;
+                    sm.Configuration.PopulationSize = s.PopulationSize;
+                    sm.Configuration.StopCriterion = s.StopCriterion;
+                    sm.Configuration.StopDepth = s.StopDepth;
+                });
             Mapper.CreateMap<Item, ItemModel>();
 
             Mapper.CreateMap<Run, RunListItemModel>();
@@ -48,6 +57,8 @@ namespace BE.ModelosIII.Mvc
             Mapper.CreateMap<Bin, BinViewModel>();
             Mapper.CreateMap<BinItem, BinItemModel>();
             Mapper.CreateMap<BinItem, BinItemViewModel>();
+
+            Mapper.CreateMap<GenerationReportModel, Infrastructure.ApplicationServices.Models.GenerationReport.ReportDataItem>();
 
             Mapper.AssertConfigurationIsValid();
         }

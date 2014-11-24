@@ -15,6 +15,8 @@ using BE.ModelosIII.Mvc.Models.Item;
 using BE.ModelosIII.Mvc.Validators.Scenario;
 using FluentValidation.Mvc;
 using BE.ModelosIII.Mvc.Controllers.Queries;
+using BE.ModelosIII.Tasks.Validators.Scenario;
+using BE.ModelosIII.Tasks.Commands.Configuration;
 
 namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 {
@@ -116,11 +118,23 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
         {
             BindValues();
 
-            var validator = new ItemValidator();
+            var validator = new BE.ModelosIII.Mvc.Validators.Scenario.ItemValidator();
             var result = validator.Validate(model);
             result.AddToModelState(ModelState, (string)ViewBag.NewItemPrefix);
 
             return Json(new { success = ModelState.IsValid, html = RenderPartialViewToString("_NewItem", model, (string)ViewBag.NewItemPrefix) });
+        }
+
+        [HttpPost]
+        [Transaction]
+        public ActionResult ValidateConfiguration(ConfigurationCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                _commandProcessor.Process(command);
+            }
+
+            return Json(new { success = ModelState.IsValid, html = RenderPartialViewToString("Configuration/_Configuration", command, "Configuration") });
         }
 
         private void BindValues()

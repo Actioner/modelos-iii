@@ -1,0 +1,57 @@
+﻿@using MvcContrib.FluentHtml
+@using BE.ModelosIII.Mvc.Models.Scenario
+
+@inherits ModelWebViewPage<BE.ModelosIII.Tasks.Commands.Report.GenerationReportSearchCommand>
+
+<section class="utopia-widget">
+    <div class="utopia-widget-title">
+        <img class="utopia-widget-icon" src="/Content/img/icons/lightbulb.png">
+        <span>Filtros</span>
+    </div>
+    <div class="utopia-widget-content">
+        <div class="row-fluid">
+            @using (Html.BeginForm("Generation", "Report", FormMethod.Post, new { @id = "searchForm", @class = "form-horizontal" }))
+            {
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Escenario:
+                        </label>
+                        <div class="controls">
+                            @(this.Select("ScenarioId")
+                                    .Options(((IList<ScenarioListModel>)ViewBag.Scenarios).ToDictionary(x => x.Id, x => x.Name))
+                                    .FirstOption(string.Empty)
+                                    .Selected(Model.ScenarioId)
+                                    .Class("span12 scenarioSelect"))
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label for="datepicker" class="control-label">
+                            Solución:
+                        </label>
+                        <div class="controls">
+                            @(this.Select("RunId")
+                                    .FirstOption(string.Empty)
+                                    .Selected(Model.RunId)
+                                    .Class("span12 runSelect"))
+                            @Html.ValidationMessageFor(m => m.RunId, null, new { @class = "help-inline" })
+                        </div>
+                    </div>
+                </div>
+                <div class="span12">
+                    <div class="control-group">
+                        <div class="utopia-form-button">
+                            <div class="utopia-all-button">
+                                <button href="javascript:void(0)" type="submit" class="btn btn-primary span4">
+                                    Filtrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

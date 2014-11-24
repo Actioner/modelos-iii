@@ -22,10 +22,9 @@
         $(function () {
             var errorUrl = '@Url.Action("ErrorProcessing", "Home")';
             var waitUrl = '@Url.Action("PleaseWait", "Home")';
+            var validateUrl = '@Url.Action("ValidateConfiguration", "Scenario")';
 
-            $('.runSolution').click(function (ev) {
-                ev.preventDefault();
-
+            var findSolution = function (solutionUrl) {
                 $.fancybox({
                     type: 'ajax',
                     href: waitUrl,
@@ -39,7 +38,7 @@
                     }
                 });
 
-                $.getJSON($(this).data('href'), function (result) {
+                $.getJSON(solutionUrl, function (result) {
                     if (result.success) {
                         window.location = result.redirectUrl;
                     }
@@ -51,6 +50,28 @@
                         });
                     }
                 });
+            };
+
+            $('.runSolution').click(function (ev) {
+                ev.preventDefault();
+
+                var solutionUrl = $(this).data('href');
+                var configuration = {};
+                configuration.ScenarioId = $("#ScenarioId").val();
+                configuration.CrossoverProbability = $("#Configuration_CrossoverProbability").val();
+                configuration.MutationProbability = $("#Configuration_MutationProbability").val();
+                configuration.PopulationSize = $("#Configuration_PopulationSize").val();
+                configuration.StopCriterion = $("#Configuration_StopCriterion").val();
+                configuration.StopDepth = $("#Configuration_StopDepth").val();
+
+                $.post(validateUrl, configuration, function (result) {
+                    $("#configuration").html(result.html);
+                    showErrorsStyled();
+
+                    if (result.success) {
+                        findSolution(solutionUrl);
+                    }
+                }, 'json');
             });
         });
     </script>

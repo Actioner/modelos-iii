@@ -82,12 +82,12 @@ namespace BE.ModelosIII.Tests.BE.ModelosIII.Data.NHibernateMaps
         [Explicit]
         public void CanCreateDatabase()
         {
-            //new SchemaExport(this.configuration).Execute(false, true, false);
+            new SchemaExport(this.configuration).Execute(false, true, false);
 
-            //var insertsCommand = NHibernateSession.GetDefaultSessionFactory().OpenSession().Connection.CreateCommand();
-            //insertsCommand.CommandType = CommandType.Text;
-            //insertsCommand.CommandText = File.ReadAllText("../../../../Database/RequiredInserts.sql");
-            //insertsCommand.ExecuteNonQuery();
+            var insertsCommand = NHibernateSession.GetDefaultSessionFactory().OpenSession().Connection.CreateCommand();
+            insertsCommand.CommandType = CommandType.Text;
+            insertsCommand.CommandText = File.ReadAllText("../../../../Database/RequiredInserts.sql");
+            insertsCommand.ExecuteNonQuery();
         }
     }
 }

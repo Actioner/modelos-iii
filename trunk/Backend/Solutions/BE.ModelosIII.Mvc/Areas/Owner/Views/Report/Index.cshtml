@@ -1,0 +1,121 @@
+﻿@using BE.ModelosIII.Infrastructure.Helpers
+@using MvcContrib.FluentHtml
+@using BE.ModelosIII.Mvc.Models.Report
+
+@inherits ModelWebViewPage<GenerationReportListModel>
+@{
+    ViewBag.Title = "Reporte de Evolución de la solución";
+    Layout = ViewBag.Layout;
+}
+
+@Html.Partial("Search/_GenerationReportSearch", Model.Search)
+@Html.Partial("_List", Model.ReportRows)
+@if (Model.ReportRows.Any())
+{
+    @Html.Partial("_Chart", Model.ReportRows)
+}
+
+<input type="hidden" id="ChartUri" />
+
+@section scripts {
+    <script type="text/javascript" src="/Content/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/Content/js/tables.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        var reportRows = JSON.parse('@Html.Raw(Model.ReportRows.ToJson())');
+        var exportUrl = '@Url.Action("GenerationExport", "Report")';
+        var downloadUrl = '@Url.Action("DownloadGenerationReport", "Report")';
+
+        $(function () {
+            initializeDataTableOnLoad('.datatable');
+
+            initializeSelect('.scenarioSelect', {
+                placeholder: "Seleccione un Escenario"
+            });
+
+            var runModels = JSON.parse('@Html.Raw(ViewBag.Runs)');
+            var originalScenarioId = @Model.Search.ScenarioId;
+            var originalRunId = @Model.Search.RunId;
+
+            var loadRuns = function (id) {
+                var runs;
+                for (var i = 0; i < runModels.length; i++) {
+                    if (runModels[i].ScenarioId === id) {
+                        runs = runModels[i].Runs;
+                        break;
+                    }
+                }
+                var items = '<option value="0">Seleccione un Escenario</option>';
+                var placeholder = 'Seleccione un Escenario';
+                if (typeof (runs) != "undefined") {
+                    var items = '<option value="0">Seleccione una Solución</option>';
+                    $.each(runs, function (i, sc) {
+                        var dateVal = moment.utc(sc.RunOnUtc);
+                        var output = dateVal.local().format("DD/MM/YYYY HH:mm:ss");
+                        items += "<option value='" + sc.Id + "'>" + output + "</option>";
+                    });
+                }
+                $('.runSelect').html(items);
+            };
+
+            $('.scenarioSelect').change(function () {
+                var scenarioId = parseInt($(this).val());
+                loadRuns(scenarioId);
+            });
+
+            loadRuns(originalScenarioId);
+            $('.runSelect').val(originalRunId);
+
+            $('#export').click(function(ev){
+                ev.preventDefault();
+
+                var params = {};
+                params.ScenarioId = $('#ScenarioId').val();
+                params.RunId = $('#RunId').val();
+                params.ChartUri = $('#ChartUri').val();
+
+                $.post(exportUrl, params, function (result) {
+                    if (result.success) {
+                        window.location = downloadUrl + "?reportFile=" + result.reportFile;
+                    }
+                }, 'json');
+            });
+        });
+
+        if (reportRows.length > 0) {
+            google.load("visualization", "1", { packages: ["corechart"] });
+            google.setOnLoadCallback(drawChart);
+
+            // Wait for the chart to finish drawing before calling the getImageURI() method.
+
+
+        }
+
+        function drawChart() {
+            var dataArray = [['Generación', 'Mejor', 'Promedio', 'Peor']];
+            for (var i = 0; i < reportRows.length; i++) {
+                dataArray.push([reportRows[i].Number, reportRows[i].Best, reportRows[i].Average, reportRows[i].Worst]);
+            }
+
+            var data = google.visualization.arrayToDataTable(dataArray);
+
+            var options = {
+                title: 'Evolución de la solución',
+                hAxis: { title: 'Generación', titleTextStyle: { color: 'red'} },
+                vAxis: { title: 'Fitness', titleTextStyle: { color: 'red'} }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart'));
+
+            google.visualization.events.addListener(chart, 'ready', function () {
+                $('#ChartUri').val(chart.getImageURI());
+            });
+
+            chart.draw(data, options);
+        }
+    </script>
+}
+
+@section css {
+    <link href="/Content/styles/datepicker.css" rel="stylesheet" type="text/css" />
+}

@@ -25,7 +25,7 @@
                 <div class="control-group">
                     <label class="control-label">
                         Fecha</label>
-                    <label class="control-label span4">@Model.RunOn</label>
+                    <label class="control-label span4 utcToLocaleDate" data-utc="@Model.RunOn.ToString("o")"></label>
                 </div>
             </div>
         </div>
@@ -104,6 +104,45 @@
                         }
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </section>
+    <section class="utopia-widget">
+        <div class="utopia-widget-title">
+            <span>Configuración Avanzada</span>
+        </div>
+        <div class="utopia-widget-content">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">
+                        Probabilidad de Cruza
+                    </label>
+                    <label class="control-label span4">@Model.CrossoverProbability.ToString("P0")</label>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Probabilidad de Mutación
+                    </label>
+                    <label class="control-label span4">@Model.MutationProbability.ToString("P0")</label>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Tamaño de la Población
+                    </label>
+                    <label class="control-label span4">@Model.PopulationSize</label>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Criterio de Parada
+                    </label>
+                    <label class="control-label span4">@Model.StopCriterion.ToDescription()</label>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Profundidad de Parada
+                    </label>
+                    <label class="control-label span4">@Model.StopDepth</label>
+                </div>
             </div>
         </div>
     </section>
