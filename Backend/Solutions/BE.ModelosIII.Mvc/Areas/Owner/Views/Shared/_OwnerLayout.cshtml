@@ -24,24 +24,12 @@
                  href="@Url.Action("Index", "Run", null)" title="soluciones">
                 <span>Soluciones</span>
             </a>
-             @*<ul class="dropdown">
-                    <li><a class="simple smronju" href="@Url.Action("Index", "Run", null)" title="Soluciones">
-                        <span>Listar</span> </a></li>
-                    <li><a class="wizard-form smronju" href="@Url.Action("Create", "Run", null)" title="Crear Solucion">
-                        <span>Encontrar</span> </a></li>
-            </ul>*@
         </li>
         <li class=@(ViewBag.ControllerName == "report" ? "current" : string.Empty) >
             <a style="background-position: -12px -222px;"
-               href="@Url.Action("Soon", "Home", null)" title="reportes">
+               href="@Url.Action("Generation", "Report", null)" title="reportes">
                 <span>Reportes</span>
             </a>
-            @*  <ul class="dropdown">
-                <li><a class="simple smronju" href="@Url.Action("MostSoldHour", "Report", null)" title="Horarios más vendidos">
-                    <span>Horarios más vendidos</span> </a></li>
-                <li><a class="simple smronju" href="@Url.Action("MostSoldMovie", "Report", null)" title="Películas más vendidas">
-                    <span>Películas más vendidas</span> </a></li>
-            </ul>*@
         </li>
     </ul>
 }

@@ -13,8 +13,7 @@ namespace BE.ModelosIII.Infrastructure.ApplicationServices
     {
         private Document _document;
         private PdfWriter _pdfWriter;
-        private Models.MostSoldHour.ReportInfo _mostSoldHourInfo;
-        private Models.MostSoldMovie.ReportInfo _mostSoldMovieInfo;
+        private Models.GenerationReport.ReportInfo _generationReportInfo;
 
         private readonly IFileSystem _fileSystem;
         private readonly string _workPath;
@@ -27,11 +26,11 @@ namespace BE.ModelosIII.Infrastructure.ApplicationServices
             _workPath = workPath;
         }
 
-        public byte[] GetMostSoldHourContent(Models.MostSoldHour.ReportInfo info)
+        public byte[] GetGenerationReportContent(Models.GenerationReport.ReportInfo info)
         {
             if (info == null) throw new ArgumentNullException("info");
 
-            _mostSoldHourInfo = info;
+            _generationReportInfo = info;
             _document = new Document(PageSize.A4, 20f, 20f, 100f, 20f);
             var outputStream = new MemoryStream();
 
@@ -45,7 +44,7 @@ namespace BE.ModelosIII.Infrastructure.ApplicationServices
                                           };
                 _pdfWriter.PageEvent = pageEventHelper;
                 _document.Open();
-                GenerateMostSoldHourDocument();
+                GenerateGenerationReportDocument();
             }
             finally
             {
@@ -59,18 +58,16 @@ namespace BE.ModelosIII.Infrastructure.ApplicationServices
             return outputPdf;
         }
 
-        private void GenerateMostSoldHourDocument()
+        private void GenerateGenerationReportDocument()
         {
-            AddMostSoldHourInfo();
-            AddMostSoldHourChart();
+            AddGenerationReportInfo();
+            AddGenerationReportChart();
         }
 
-        private void AddMostSoldHourInfo()
+        private void AddGenerationReportInfo()
         {
-            string description = string.Format(ReportMessages.MostSoldHourDescription,
-                                               string.IsNullOrEmpty(_mostSoldHourInfo.Multiplex) ? "todos los complejos" : "el complejo " + _mostSoldHourInfo.Multiplex,
-                                               _mostSoldHourInfo.From,
-                                               _mostSoldHourInfo.To);
+            string description = string.Format(ReportMessages.GenerationDescription,
+                                               _generationReportInfo.Run);
 
             var p = new Paragraph
                         {
@@ -79,13 +76,13 @@ namespace BE.ModelosIII.Infrastructure.ApplicationServices
             p.IndentationLeft = _document.PageSize.Width * 0.1f;
             _document.Add(p);
 
-            string[] columns = { "Horario", "Candidad Vendidas", "Cantidad Películas" };
-            var table = new PdfPTable(3)
+            string[] columns = { "Generación", "Mejor Fitness", "Fitness Promedio", "Peor Fitness" };
+            var table = new PdfPTable(4)
                             {
                                 WidthPercentage = 100,
                                 TotalWidth = _document.PageSize.Width - 80
                             };
-            table.SetWidths(new Single[] { 1, 1, 1 });
+            table.SetWidths(new Single[] { 1, 1, 1, 1 });
             table.SpacingBefore = 10;
             table.SpacingAfter = 80;
 
@@ -98,143 +95,37 @@ namespace BE.ModelosIII.Infrastructure.ApplicationServices
                 table.AddCell(cell);
             }
 
-            foreach (var item in _mostSoldHourInfo.Items)
+            foreach (var item in _generationReportInfo.Items)
             {
-                table.AddCell(item.StartTime);
-                table.AddCell(item.SoldTickets.ToString(CultureInfo.InvariantCulture));
-                table.AddCell(item.MovieQuantity.ToString(CultureInfo.InvariantCulture));
+                table.AddCell(item.Number.ToString(CultureInfo.InvariantCulture));
+                table.AddCell(item.Best.ToString(CultureInfo.InvariantCulture));
+                table.AddCell(item.Average.ToString(CultureInfo.InvariantCulture));
+                table.AddCell(item.Worst.ToString(CultureInfo.InvariantCulture));
             }
 
             _document.Add(table);
         }
 
-        private void AddMostSoldHourChart()
+        private void AddGenerationReportChart()
         {
-            if (_mostSoldHourInfo.Items == null || !_mostSoldHourInfo.Items.Any())
+            if (_generationReportInfo.Items == null || !_generationReportInfo.Items.Any())
             {
                 return;
             }
 
-            const string chartFormat = "http://chart.googleapis.com/chart?chxl=1:|{0}&chxr=0,0,{1}&chxt=y,x&chbh=a,5,10&chs=450x375&cht=bvg&chco=3072F3&chds=0,{1}&chd=t:{2}&chdl={3}";
-            string xAxisData = string.Join("|", _mostSoldHourInfo.Items.Select(i => HttpUtility.UrlEncode(i.StartTime)));
-            string yAxisData = string.Join(",", _mostSoldHourInfo.Items.Select(i => i.SoldTickets));
-            int yAxisMax = _mostSoldHourInfo.Items.Max(i => i.SoldTickets) + 5;
-
-            string chart = string.Format(chartFormat, 
-                xAxisData,
-                yAxisMax, 
-                yAxisData, 
-                ReportMessages.MostSoldHourChartLabel);
-
-            var uri = new Uri(chart);
-            var chartImage = Image.GetInstance(uri);
-            chartImage.SpacingBefore = 10f;
-            chartImage.Alignment = Image.TEXTWRAP | Image.ALIGN_CENTER;
-            _document.Add(chartImage);
-        }
-
-        public byte[] GetMostSoldMovieContent(Models.MostSoldMovie.ReportInfo info)
-        {
-            if (info == null) throw new ArgumentNullException("info");
-
-            _mostSoldMovieInfo = info;
-            _document = new Document(PageSize.A4, 20f, 20f, 100f, 20f);
-            var outputStream = new MemoryStream();
-
-            try
+            string base64 = _generationReportInfo.ChartUri.Substring(_generationReportInfo.ChartUri.IndexOf(',') + 1);
+            byte[] data = Convert.FromBase64String(base64);
+            using (var stream = new MemoryStream(data, 0, data.Length))
             {
-                _pdfWriter = PdfWriter.GetInstance(_document, outputStream);
-                _pdfWriter.CloseStream = false;
-                var pageEventHelper = new TwoColumnHeaderFooter(_fileSystem, _workPath)
-                {
-                    Title = info.Title
-                };
-                _pdfWriter.PageEvent = pageEventHelper;
-                _document.Open();
-                GenerateMostSoldMovieDocument();
+                var chartImage = Image.GetInstance(stream);
+                chartImage.SpacingBefore = 10f;
+                chartImage.Alignment = Image.TEXTWRAP | Image.ALIGN_CENTER;
+
+                float percentage = 0.0f;
+                percentage = (_document.PageSize.Width - 40) / chartImage.Width;
+                chartImage.ScalePercent(percentage * 100);
+                _document.Add(chartImage);
             }
-            finally
-            {
-                _document.Close();
-            }
-            outputStream.Flush();
-            outputStream.Position = 0;
-
-            byte[] outputPdf = outputStream.ToArray();
-
-            return outputPdf;
-        }
-
-        private void GenerateMostSoldMovieDocument()
-        {
-            AddMostSoldMovieInfo();
-            AddMostSoldMovieChart();
-        }
-
-        private void AddMostSoldMovieInfo()
-        {
-            string description = string.Format(ReportMessages.MostSoldMovieDescription,
-                                               string.IsNullOrEmpty(_mostSoldMovieInfo.Multiplex) ? "todos los complejos" : "el complejo " + _mostSoldMovieInfo.Multiplex,
-                                               _mostSoldMovieInfo.From,
-                                               _mostSoldMovieInfo.To);
-
-            var p = new Paragraph
-                        {
-                            new Chunk(description)
-                        };
-            p.IndentationLeft = _document.PageSize.Width * 0.1f;
-            _document.Add(p);
-
-            string[] columns = { "Candidad Vendidas", "Película", "Complejo" };
-            var table = new PdfPTable(3)
-            {
-                WidthPercentage = 100,
-                TotalWidth = _document.PageSize.Width - 80
-            };
-            table.SetWidths(new Single[] { 1, 1, 1 });
-            table.SpacingBefore = 10;
-            table.SpacingAfter = 80;
-
-            foreach (string column in columns)
-            {
-                var cell = new PdfPCell(new Phrase(column))
-                {
-                    BackgroundColor = new BaseColor(204, 204, 204)
-                };
-                table.AddCell(cell);
-            }
-
-            foreach (var item in _mostSoldMovieInfo.Items)
-            {
-                table.AddCell(item.SoldTickets.ToString(CultureInfo.InvariantCulture));
-                table.AddCell(item.Movie);
-                table.AddCell(item.Multiplex);
-            }
-
-            _document.Add(table);
-        }
-
-        private void AddMostSoldMovieChart()
-        {
-            if (_mostSoldMovieInfo.Items == null || !_mostSoldMovieInfo.Items.Any())
-            {
-                return;
-            }
-
-            const string chartFormat = "http://chart.googleapis.com/chart?chs=600x200&cht=p&chco=3072F3&chd=t:{0}&chl={1}&{2}";
-            string axisData = string.Join(",", _mostSoldMovieInfo.Items.Select(i => i.SoldTickets));
-            string axisArrowData = string.Join("|", _mostSoldMovieInfo.Items.Select(i => HttpUtility.UrlEncode(i.Movie + " - " + i.Multiplex)));
-
-            string chart = string.Format(chartFormat,
-                axisData,
-                axisArrowData,
-                ReportMessages.MostSoldMovieChartLabel);
-
-            var uri = new Uri(chart);
-            var chartImage = Image.GetInstance(uri);
-            chartImage.SpacingBefore = 10f;
-            chartImage.Alignment = Image.TEXTWRAP | Image.ALIGN_CENTER;
-            _document.Add(chartImage);
         }
     }
 

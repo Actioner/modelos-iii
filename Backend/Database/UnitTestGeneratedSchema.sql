@@ -95,6 +95,11 @@ alter table Users  drop constraint FK2C1C7FE5E754B2BE
     create table Runs (
         RunId INT IDENTITY NOT NULL,
        RunOn DATETIME null,
+       CrossoverProbability REAL null,
+       MutationProbability REAL null,
+       PopulationSize INT null,
+       StopDepth INT null,
+       StopCriterion NVARCHAR(255) null,
        ScenarioId INT null,
        primary key (RunId)
     )
@@ -103,6 +108,11 @@ alter table Users  drop constraint FK2C1C7FE5E754B2BE
         ScenarioId INT IDENTITY NOT NULL,
        Name NVARCHAR(255) null,
        BinSize REAL null,
+       CrossoverProbability REAL null,
+       MutationProbability REAL null,
+       PopulationSize INT null,
+       StopDepth INT null,
+       StopCriterion NVARCHAR(255) null,
        primary key (ScenarioId)
     )
 

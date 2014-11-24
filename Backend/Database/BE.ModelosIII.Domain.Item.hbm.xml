@@ -13,7 +13,7 @@
     <property name="Size" type="System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="Size" />
     </property>
-    <many-to-one cascade="all" class="BE.ModelosIII.Domain.Scenario, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Scenario">
+    <many-to-one cascade="none" class="BE.ModelosIII.Domain.Scenario, BE.ModelosIII.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Scenario">
       <column name="ScenarioId" />
     </many-to-one>
   </class>

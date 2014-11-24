@@ -14,6 +14,7 @@ namespace BE.ModelosIII.Mvc
                         "~/Content/js/jquery.js",
                         "~/Content/js/jquery.cookie.js",
                         "~/Content/js/jquery.datatable.js",
+                        "~/Content/js/moment/moment.js",
                         "~/Content/js/globalize/globalize.js",
                         "~/Content/js/globalize/cultures/globalize.culture.es-AR.js"));
 

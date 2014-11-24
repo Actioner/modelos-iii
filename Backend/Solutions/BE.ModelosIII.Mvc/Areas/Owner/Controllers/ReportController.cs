@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BE.ModelosIII.Domain.Contracts.Repositories;
@@ -7,66 +6,68 @@ using BE.ModelosIII.Infrastructure.ApplicationServices;
 using BE.ModelosIII.Mvc.Controllers;
 using System.Web.Mvc;
 using BE.ModelosIII.Mvc.Controllers.Queries;
-using BE.ModelosIII.Mvc.Models.Multiplex;
 using BE.ModelosIII.Mvc.Models.Report;
 using BE.ModelosIII.Mvc.Models.Util;
-using BE.ModelosIII.Resources;
 using BE.ModelosIII.Tasks.Commands.Report;
+using BE.ModelosIII.Mvc.Models.Scenario;
+using BE.ModelosIII.Infrastructure.Helpers;
+using BE.ModelosIII.Resources;
+using System;
+using System.IO;
 
 namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
 {
     public class ReportController : BaseController
     {
-        private readonly IMostSoldHourReportQuery _mostSoldHourReportQuery;
-        private readonly IMostSoldMovieReportQuery _mostSoldMovieReportQuery;
-        private readonly IMultiplexRepository _multiplexRepository;
+        private readonly IGenerationReportQuery _generationReportQuery;
+        private readonly IScenarioRepository _scenarioRepository;
+        private readonly IRunRepository _runRepository;
         private readonly IPdfManager _pdfManager;
         private readonly IMappingEngine _mappingEngine;
 
         public ReportController(
-            IMostSoldHourReportQuery mostSoldHourReportQuery,
-            IMostSoldMovieReportQuery mostSoldMovieReportQuery,
-            IMultiplexRepository multiplexRepository,
+            IGenerationReportQuery generationReportQuery,
+            IScenarioRepository scenarioRepository,
+            IRunRepository runRepository,
             IPdfManager pdfManager,
             IMappingEngine mappingEngine)
         {
-            _mostSoldHourReportQuery = mostSoldHourReportQuery;
-            _mostSoldMovieReportQuery = mostSoldMovieReportQuery;
-            _multiplexRepository = multiplexRepository;
+            _generationReportQuery = generationReportQuery;
+            _scenarioRepository = scenarioRepository;
+            _runRepository = runRepository;
             _pdfManager = pdfManager;
             _mappingEngine = mappingEngine;
         }
 
         //
-        // GET: /MostSoldHour/
+        // GET: /Generation/
         [HttpGet]
-        public ActionResult MostSoldHour()
+        public ActionResult Generation()
         {
             BindSearchValues();
-            return View("Hour/Index", new MostSoldHourListModel());
+            return View("Index", new GenerationReportListModel());
         }
 
         //
-        // POST: /MostSoldHour/
+        // POST: /Generation/
         [HttpPost]
-        public ActionResult MostSoldHour(MostSoldCommand search)
+        public ActionResult Generation(GenerationReportSearchCommand search)
         {
             BindSearchValues();
-            var result = new MostSoldHourListModel
+            var result = new GenerationReportListModel
                              {
                                  Search = search
                              };
 
             if (ModelState.IsValid)
             {
-                result.ReportRows = _mostSoldHourReportQuery.GetReport(search);
-                var action = new ActionModel("Exportar", "MostSoldHourExport", IconType.Create)
+                result.ReportRows = _generationReportQuery.GetReport(search);
+                var action = new ActionModel("Exportar", "GenerationExport", IconType.Create, "export")
                                  {
                                      RouteValues = new
                                                        {
-                                                           from = search.From,
-                                                           to = search.To,
-                                                           multiplexid = search.MultiplexId
+                                                           scenarioId = search.ScenarioId,
+                                                           runId = search.RunId
                                                        }
                                  };
                 ViewBag.Actions = new List<ActionModel>
@@ -75,101 +76,51 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
                                   };
             }
 
-            return View("Hour/Index", result);
+            return View("Index", result);
         }
 
         //
-        // POST: /MostSoldHour/
-        [HttpGet]
-        public FileContentResult MostSoldHourExport(MostSoldCommand search)
+        // POST: /Generation/
+        [HttpPost]
+        public JsonResult GenerationExport(GenerationReportSearchCommand search)
         {
-            var reportRows = _mostSoldHourReportQuery.GetReport(search);
-            string multiplex = search.MultiplexId.HasValue ? _multiplexRepository.Get(search.MultiplexId.Value).Name : string.Empty;
+            var reportRows = _generationReportQuery.GetReport(search);
+            var run = _runRepository.Get(search.RunId);
 
-            var reportInfo = new Infrastructure.ApplicationServices.Models.MostSoldHour.ReportInfo
+            var reportInfo = new Infrastructure.ApplicationServices.Models.GenerationReport.ReportInfo
                                  {
-                                     Title = ReportMessages.MostSoldHourTitle,
-                                     From = search.From.ToString("dd/MM/yyyy"),
-                                     To = search.To.ToString("dd/MM/yyyy"),
-                                     Multiplex = multiplex,
-                                     Items = _mappingEngine.Map<IList<Infrastructure.ApplicationServices.Models.MostSoldHour.ReportDataItem>>(reportRows)
+                                     Title = ReportMessages.GenerationTitle,
+                                     Run = run.Scenario.Name + " (" + run.RunOn + ")",
+                                     ChartUri = search.ChartUri,
+                                     Items = _mappingEngine.Map<IList<Infrastructure.ApplicationServices.Models.GenerationReport.ReportDataItem>>(reportRows)
                                  };
 
-            var fileName = string.Format("{0}_{1}.pdf", ReportMessages.MostSoldHourTitle, DateTime.Now.ToString("yyyyMMddHHmmss"));
-            var pdfData = _pdfManager.GetMostSoldHourContent(reportInfo);
+            string reportFile = string.Format("{0}_{1}.pdf", ReportMessages.GenerationTitle, DateTime.Now.ToString("yyyyMMddHHmmss"));
+            string fullPath = Path.Combine(Server.MapPath("~/uploads/reports"), reportFile);
+            var pdfData = _pdfManager.GetGenerationReportContent(reportInfo);
 
-            return File(pdfData, "application/pdf", fileName);
+            System.IO.File.WriteAllBytes(fullPath, pdfData);
+            return Json(new { success = true, reportFile = reportFile });
         }
 
-
-        //
-        // GET: /MostSoldMovie/
         [HttpGet]
-        public ActionResult MostSoldMovie()
+        public FileContentResult DownloadGenerationReport(string reportFile)
         {
-            BindSearchValues();
-            return View("Movie/Index", new MostSoldMovieListModel());
-        }
+            string fullPath = Path.Combine(Server.MapPath("~/uploads/reports"), reportFile);
+            var result = System.IO.File.ReadAllBytes(fullPath);
 
-        //
-        // POST: /MostSoldMovie/
-        [HttpPost]
-        public ActionResult MostSoldMovie(MostSoldCommand search)
-        {
-            BindSearchValues();
-            var result = new MostSoldMovieListModel
-            {
-                Search = search
-            };
-
-            if (ModelState.IsValid)
-            {
-                result.ReportRows = _mostSoldMovieReportQuery.GetReport(search);
-                var action = new ActionModel("Exportar", "MostSoldMovieExport", IconType.Create)
-                {
-                    RouteValues = new
-                    {
-                        from = search.From,
-                        to = search.To,
-                        multiplexid = search.MultiplexId
-                    }
-                };
-                ViewBag.Actions = new List<ActionModel>
-                                  {
-                                      action,
-                                  };
-            }
-
-            return View("Movie/Index", result);
-        }
-
-        //
-        // POST: /MostSoldMovie/
-        [HttpGet]
-        public FileContentResult MostSoldMovieExport(MostSoldCommand search)
-        {
-            var reportRows = _mostSoldMovieReportQuery.GetReport(search);
-            string multiplex = search.MultiplexId.HasValue ? _multiplexRepository.Get(search.MultiplexId.Value).Name : string.Empty;
-
-            var reportInfo = new Infrastructure.ApplicationServices.Models.MostSoldMovie.ReportInfo
-            {
-                Title = ReportMessages.MostSoldMovieTitle,
-                From = search.From.ToString("dd/MM/yyyy"),
-                To = search.To.ToString("dd/MM/yyyy"),
-                Multiplex = multiplex,
-                Items = _mappingEngine.Map<IList<Infrastructure.ApplicationServices.Models.MostSoldMovie.ReportDataItem>>(reportRows)
-            };
-
-            var fileName = string.Format("{0}_{1}.pdf", ReportMessages.MostSoldMovieTitle, DateTime.Now.ToString("yyyyMMddHHmmss"));
-            var pdfData = _pdfManager.GetMostSoldMovieContent(reportInfo);
-
-            return File(pdfData, "application/pdf", fileName);
+            return File(result, "application/pdf", reportFile);
         }
 
         private void BindSearchValues()
         {
-            var multiplexes = _multiplexRepository.GetAll().OrderBy(m => m.Name);
-            ViewBag.Multiplexes = _mappingEngine.Map<IList<MultiplexModel>>(multiplexes);
+            var scenarios = _scenarioRepository.GetAll().OrderBy(m => m.Name);
+            ViewBag.Scenarios = _mappingEngine.Map<IList<ScenarioListModel>>(scenarios);
+            ViewBag.Runs = scenarios.Select(m => new
+                                                     {
+                                                         ScenarioId = m.Id,
+                                                         Runs = m.Runs.Select(s => new { s.Id, RunOnUtc = s.RunOn.ToString("o") })
+                                                     }).ToJson();
         }
     }
 }

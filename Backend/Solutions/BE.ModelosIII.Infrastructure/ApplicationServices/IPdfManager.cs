@@ -2,7 +2,6 @@
 {
     public interface IPdfManager
     {
-        byte[] GetMostSoldHourContent(Models.MostSoldHour.ReportInfo info);
-        byte[] GetMostSoldMovieContent(Models.MostSoldMovie.ReportInfo info);
+        byte[] GetGenerationReportContent(Models.GenerationReport.ReportInfo info);
     }
 }

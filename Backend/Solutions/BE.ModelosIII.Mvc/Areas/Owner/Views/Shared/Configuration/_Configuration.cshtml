@@ -1,0 +1,72 @@
+﻿@using MvcContrib.FluentHtml
+@using BE.ModelosIII.Infrastructure.Helpers
+@using BE.ModelosIII.Resources
+@using BE.ModelosIII.Domain
+
+@inherits ModelWebViewPage<BE.ModelosIII.Tasks.Commands.Configuration.ConfigurationCommand>
+
+<section id="configuration" class="utopia-widget">
+    <div class="utopia-widget-title">
+        <span>Configuración Avanzada</span>
+    </div>
+    <div class="utopia-widget-content">
+        <div class="form-horizontal">
+            <div class="row-fluid">
+                <div class="utopia-widget-content">
+                    <div class="span12 utopia-form-freeSpace">
+                        <div class="control-group">
+                            <label for="inputError" class="control-label">
+                                Probabilidad de Cruza
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.CrossoverProbability, new { @class = "span4", maxlength = "3" })
+                                @Html.ValidationMessageFor(m => m.CrossoverProbability, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="inputError" class="control-label">
+                                Probabilidad de Mutación
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.MutationProbability, new { @class = "span4", maxlength = "3" })
+                                @Html.ValidationMessageFor(m => m.MutationProbability, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="inputError" class="control-label">
+                                Tamaño de la Población
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.PopulationSize, new { @class = "span4", maxlength = "255" })
+                                @Html.ValidationMessageFor(m => m.PopulationSize, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="inputError" class="control-label">
+                                Criterio de Parada
+                            </label>
+                            <div class="controls">
+                                @(this.Select("Configuration_StopCriterion")
+                                            .Options(Enum.GetValues(typeof(Enums.StopCriterion))
+                                                    .Cast<Enums.StopCriterion>()
+                                                    .ToDictionary(x => (int)x, x => ((Enum)x).ToDescription()))
+                                            .Selected(Model.StopCriterion)
+                                            .Class("span4"))
+                                @Html.ValidationMessageFor(m => m.StopCriterion, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="inputError" class="control-label">
+                                Profundidad de Parada
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.StopDepth, new { @class = "span4", maxlength = "255" })
+                                @Html.ValidationMessageFor(m => m.StopDepth, null, new { @class = "help-inline" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

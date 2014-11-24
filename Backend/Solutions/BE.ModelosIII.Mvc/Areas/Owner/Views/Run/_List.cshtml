@@ -33,7 +33,7 @@
                 {
                     <tr>
                         <td>@runModel.Scenario.Name</td>
-                        <td>@runModel.RunOn</td>
+                        <td class="utcToLocaleDate" data-utc="@runModel.RunOn.ToString("o")"></td>
                         <td class="actions">
                           <a class="edit" data-original-title="Ver" href="@Url.Action("View", new { Id = runModel.Id })">
                               <img alt="Ver" src="/Content/img/icons/eye.png"></a> 

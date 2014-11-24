@@ -7,7 +7,7 @@
     Layout = ViewBag.Layout;
 }
 
-@Html.Partial("_Search", Model.RunSearch)
+@Html.Partial("Search/_Search", Model.RunSearch)
 @Html.Partial("_List", Model.Runs)
 
 @section scripts {
@@ -28,6 +28,8 @@
             initializeSelect('.scenarioSelect', {
                 placeholder: "Seleccione un Escenario"
             });
+
+            $("#OffsetMinutes").val(moment().zone());
         });
     </script>
 }

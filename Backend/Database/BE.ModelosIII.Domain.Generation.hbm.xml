@@ -4,7 +4,7 @@
       <column name="GenerationId" />
       <generator class="identity" />
     </id>
-    <bag cascade="all-delete-orphan" name="Populations">
+    <bag cascade="all-delete-orphan" inverse="true" name="Populations">
       <key>
         <column name="GenerationId" />
       </key>

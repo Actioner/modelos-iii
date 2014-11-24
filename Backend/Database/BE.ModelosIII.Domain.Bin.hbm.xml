@@ -4,7 +4,7 @@
       <column name="BinId" />
       <generator class="identity" />
     </id>
-    <bag name="BinItems">
+    <bag cascade="all-delete-orphan" inverse="true" name="BinItems">
       <key>
         <column name="BinId" />
       </key>

@@ -117,22 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MostSoldHourChartLabel" xml:space="preserve">
-    <value>Ventas</value>
+  <data name="GenerationChartLabel" xml:space="preserve">
+    <value>Evolución de la solución</value>
   </data>
-  <data name="MostSoldHourDescription" xml:space="preserve">
-    <value>Horarios más vendidos para {0}, desde {1} y hasta {2}.</value>
+  <data name="GenerationDescription" xml:space="preserve">
+    <value>{0}: Evolución de la solución para cada generación, incluyendo la mejor, la peor y la solución promedio.</value>
   </data>
-  <data name="MostSoldHourTitle" xml:space="preserve">
-    <value>Horarios más vendidos</value>
-  </data>
-  <data name="MostSoldMovieChartLabel" xml:space="preserve">
-    <value>Películas más vendidas</value>
-  </data>
-  <data name="MostSoldMovieDescription" xml:space="preserve">
-    <value>Películas más vendidas para {0}, desde {1} y hasta {2}.</value>
-  </data>
-  <data name="MostSoldMovieTitle" xml:space="preserve">
-    <value>Películas más vendidas</value>
+  <data name="GenerationTitle" xml:space="preserve">
+    <value>Evolución de la solución</value>
   </data>
 </root>

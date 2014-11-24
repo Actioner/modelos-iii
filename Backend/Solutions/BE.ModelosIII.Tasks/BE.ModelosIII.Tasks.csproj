@@ -73,14 +73,14 @@
     </Reference>
     <Reference Include="FluentValidation, Version=4.0.0.1, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\Packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SharpArch.Domain, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Packages\SharpArch.Domain.2.0.4\lib\NET40\SharpArch.Domain.dll</HintPath>
+      <HintPath>..\packages\SharpArch.Domain.2.0.4\lib\NET40\SharpArch.Domain.dll</HintPath>
     </Reference>
     <Reference Include="SharpArch.NHibernate, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -101,24 +101,23 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AutoMappingsCreator.cs" />
+    <Compile Include="CommandHandlers\Configuration\ConfigurationHandler.cs" />
     <Compile Include="CommandHandlers\Scenario\CreateScenarioHandler.cs" />
     <Compile Include="CommandHandlers\Scenario\DeleteScenarioHandler.cs" />
     <Compile Include="CommandHandlers\Scenario\ScenarioHandler.cs" />
     <Compile Include="CommandHandlers\Run\DeleteRunHandler.cs" />
-    <Compile Include="CommandHandlers\Run\CreateRunHandler.cs" />
-    <Compile Include="CommandHandlers\Run\RunHandler.cs" />
     <Compile Include="CommandResult.cs" />
-    <Compile Include="Commands\Run\RunScenarioCommand.cs" />
-    <Compile Include="Commands\Run\CreateRunCommand.cs" />
+    <Compile Include="Commands\Configuration\ConfigurationCommand.cs" />
+    <Compile Include="Commands\Report\GenerationReportSearchCommand.cs" />
     <Compile Include="Commands\Run\DeleteRunCommand.cs" />
-    <Compile Include="Commands\Run\RunCommand.cs" />
+    <Compile Include="Commands\Run\RunScenarioCommand.cs" />
     <Compile Include="Commands\Scenario\DeleteScenarioCommand.cs" />
     <Compile Include="Commands\Scenario\CreateScenarioCommand.cs" />
     <Compile Include="Commands\Scenario\ItemCommand.cs" />
     <Compile Include="Commands\Scenario\ScenarioCommand.cs" />
     <Compile Include="Commands\Security\LoginCommand.cs" />
-    <Compile Include="Validators\Run\CreateOrEditRunValidator.cs" />
-    <Compile Include="Validators\Run\CreateRunValidator.cs" />
+    <Compile Include="Validators\Configuration\ConfigurationValidator.cs" />
+    <Compile Include="Validators\Report\GenerationReportSearchValidator.cs" />
     <Compile Include="Validators\Scenario\CreateOrEditScenarioValidator.cs" />
     <Compile Include="Validators\Scenario\CreateScenarioValidator.cs" />
     <Compile Include="Validators\Scenario\ItemValidator.cs" />

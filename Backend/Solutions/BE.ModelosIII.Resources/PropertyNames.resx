@@ -126,23 +126,11 @@
   <data name="Capacity" xml:space="preserve">
     <value>Capacidad</value>
   </data>
-  <data name="Cast" xml:space="preserve">
-    <value>Reparto</value>
-  </data>
   <data name="City" xml:space="preserve">
     <value>Ciudad</value>
   </data>
-  <data name="Director" xml:space="preserve">
-    <value>Director</value>
-  </data>
   <data name="Document" xml:space="preserve">
     <value>Número de Documento</value>
-  </data>
-  <data name="Runtime" xml:space="preserve">
-    <value>Duración</value>
-  </data>
-  <data name="Genre" xml:space="preserve">
-    <value>Género</value>
   </data>
   <data name="Latitude" xml:space="preserve">
     <value>Latitud</value>
@@ -165,32 +153,17 @@
   <data name="Poster" xml:space="preserve">
     <value>Poster</value>
   </data>
-  <data name="Rating" xml:space="preserve">
-    <value>Clasificación</value>
-  </data>
-  <data name="SmallPoster" xml:space="preserve">
-    <value>Poster Pequeño</value>
-  </data>
   <data name="Surname" xml:space="preserve">
     <value>Apellido</value>
   </data>
-  <data name="Synopsis" xml:space="preserve">
-    <value>Sinopsis</value>
-  </data>
   <data name="Title" xml:space="preserve">
     <value>Título</value>
-  </data>
-  <data name="Trailer" xml:space="preserve">
-    <value>Trailer</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>Usuario</value>
   </data>
   <data name="VerifyPassword" xml:space="preserve">
     <value>Confirmar Contraseña</value>
-  </data>
-  <data name="YearOfRelease" xml:space="preserve">
-    <value>Año</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Fecha</value>
@@ -207,32 +180,11 @@
   <data name="Multiplex" xml:space="preserve">
     <value>Complejo</value>
   </data>
-  <data name="Screen" xml:space="preserve">
-    <value>Sala</value>
-  </data>
   <data name="StartDate" xml:space="preserve">
     <value>Desde</value>
   </data>
   <data name="StartTime" xml:space="preserve">
     <value>Hora Inicio</value>
-  </data>
-  <data name="ScreenLayout" xml:space="preserve">
-    <value>Mapa de Sala</value>
-  </data>
-  <data name="Screening" xml:space="preserve">
-    <value>Función</value>
-  </data>
-  <data name="Seats" xml:space="preserve">
-    <value>Asientos</value>
-  </data>
-  <data name="Seat" xml:space="preserve">
-    <value>Asiento</value>
-  </data>
-  <data name="Reservation" xml:space="preserve">
-    <value>Reserva</value>
-  </data>
-  <data name="GeneralPrice" xml:space="preserve">
-    <value>Precio General</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Valor</value>
@@ -272,5 +224,23 @@
   </data>
   <data name="Size" xml:space="preserve">
     <value>Tamaño</value>
+  </data>
+  <data name="CrossoverProbability" xml:space="preserve">
+    <value>Probabilidad de Cruza</value>
+  </data>
+  <data name="MutationProbability" xml:space="preserve">
+    <value>Probabilidad de Mutación</value>
+  </data>
+  <data name="PopulationSize" xml:space="preserve">
+    <value>Tamaño de la Población</value>
+  </data>
+  <data name="StopDepth" xml:space="preserve">
+    <value>Profundidad de Parada</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>Solución</value>
+  </data>
+  <data name="Scenario" xml:space="preserve">
+    <value>Escenario</value>
   </data>
 </root>

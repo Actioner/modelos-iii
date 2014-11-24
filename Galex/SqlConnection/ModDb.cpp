@@ -71,6 +71,11 @@ namespace ModDb
 		int				ScenarioId;
 		std::string		Name;
 		float			BinSize;
+		float			CrossoverProbability;
+		float			MutationProbability;
+		int				PopulationSize;
+		int				StopDepth;
+		std::string		StopCriterion;
 	} SCENARIO;
 
 	typedef struct ITEM_BINDING {
@@ -112,6 +117,11 @@ namespace ModDb
 	typedef struct RUN_BINDING {
 		int				RunId;
 		int				ScenarioId;
+		float			CrossoverProbability;
+		float			MutationProbability;
+		int				PopulationSize;
+		int				StopDepth;
+		std::string		StopCriterion;
 	} RUN;
 
 	typedef struct SQL_CONNECTION {
@@ -130,7 +140,7 @@ namespace ModDb
 	void Disconnect ();
 	SCENARIO GetScenario(int id);
 	std::vector<ITEM> GetItems(int runId);
-	RUN InsertRun(int scenarioId);
+	RUN InsertRun(RUN run);
 	GENERATION InsertGeneration(GENERATION generation);
 	POPULATION InsertPopulation(POPULATION population);
 	BIN InsertBin(BIN bin);
@@ -171,7 +181,7 @@ namespace ModDb
 #define PIPE                L'|'
 
 	SHORT   gHeight = 80;       // Users screen height
-	WCHAR* defaultConnectionString = L"Driver={SQL Server Native Client 11.0};Server=localhost\\SQLEXPRESS;Database=modelosIIIT;Trusted_Connection=yes;";
+	WCHAR* defaultConnectionString = L"Driver={SQL Server Native Client 11.0};Server=.;Database=modelosIII;Uid=modelosiii;Pwd=tpmodelos; ";
 	SQL_CONNECTION _sqlConnection;
 
 	std::wstring s2ws(const std::string& str)
@@ -283,7 +293,7 @@ Exit:
 		SCENARIO result;
 
 		/*SQL_CONNECTION sqlConnection = Connect();*/
-		std::wstring s = std::wstring(L"SELECT ScenarioId, Name, BinSize FROM Scenarios WHERE ScenarioId=");
+		std::wstring s = std::wstring(L"SELECT ScenarioId, Name, BinSize, CrossoverProbability, MutationProbability, PopulationSize, StopDepth, StopCriterion FROM Scenarios WHERE ScenarioId=");
 		s += std::wstring(std::to_wstring(id));
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());
 
@@ -330,6 +340,21 @@ Exit:
 
 						pThisBinding = pThisBinding->sNext;
 						result.BinSize = wcstod(pThisBinding->wszBuffer, NULL);
+						
+						pThisBinding = pThisBinding->sNext;
+						result.CrossoverProbability = wcstod(pThisBinding->wszBuffer, NULL);
+
+						pThisBinding = pThisBinding->sNext;
+						result.MutationProbability = wcstod(pThisBinding->wszBuffer, NULL);
+
+						pThisBinding = pThisBinding->sNext;
+						result.PopulationSize = wcstol(pThisBinding->wszBuffer, NULL, 10);
+
+						pThisBinding = pThisBinding->sNext;
+						result.StopDepth = wcstol(pThisBinding->wszBuffer, NULL, 10);
+
+						pThisBinding = pThisBinding->sNext;
+						result.StopCriterion = ws2s(pThisBinding->wszBuffer);
 					}
 
 					while (pFirstBinding)
@@ -480,7 +505,7 @@ Exit:
 		Disconnect();
 	};
 
-	RUN InsertRun(int scenarioId){
+	RUN InsertRun(RUN run){
 		RETCODE     retCode;
 		SQLSMALLINT sNumResults;
 		BINDING         *pFirstBinding, *pThisBinding;          
@@ -488,11 +513,22 @@ Exit:
 		RETCODE         qRetCode = SQL_SUCCESS;
 		RUN result;
 
-		result.ScenarioId = scenarioId;
+		result.ScenarioId = run.ScenarioId;
+		result.CrossoverProbability = run.CrossoverProbability;
+		result.MutationProbability = run.MutationProbability;
+		result.PopulationSize = run.PopulationSize;
+		result.StopCriterion = run.StopCriterion;
+		result.StopDepth = run.StopDepth;
 
-		//SQL_CONNECTION sqlConnection = Connect();
-		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO runs(scenarioId) VALUES(");
-		s += std::wstring(std::to_wstring(scenarioId));
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+
+		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO runs(scenarioId, CrossoverProbability, MutationProbability, PopulationSize, StopDepth, StopCriterion) VALUES(");
+		s += std::wstring(std::to_wstring(run.ScenarioId)) + std::wstring(L", ");
+		s += std::wstring(std::to_wstring(run.CrossoverProbability)) + std::wstring(L", ");
+		s += std::wstring(std::to_wstring(run.MutationProbability)) + std::wstring(L", ");
+		s += std::wstring(std::to_wstring(run.PopulationSize)) + std::wstring(L", ");
+		s += std::wstring(std::to_wstring(run.StopDepth)) + std::wstring(L", ");
+		s += std::wstring(L"'") + converter.from_bytes(run.StopCriterion) + std::wstring(L"'");
 		s += std::wstring(L");SELECT @@IDENTITY;");
 
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());

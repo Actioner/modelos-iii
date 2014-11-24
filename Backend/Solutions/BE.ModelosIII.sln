@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{D2AD5B1A-C8C2-487F-89CA-04900885F946}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Infrastructure", "1.Infrastructure", "{E6A458E6-AF91-4FB7-9224-5FC5E00C3996}"
@@ -13,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Specs", "5.Specs", "{2322
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AC222ED1-3CB2-42E0-A7A5-9EE8F6BBBCA1}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
@@ -75,10 +78,10 @@ Global
 		{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6} = {D2AD5B1A-C8C2-487F-89CA-04900885F946}
 		{9544D94B-9B6E-4B61-8A09-88382205BF86} = {E6A458E6-AF91-4FB7-9224-5FC5E00C3996}
 		{C9AAC14B-E695-4508-83B7-ACB8FC5A7284} = {BDC8840A-C964-4EFB-8778-9BC01F516491}
-		{E8CB5696-C3E6-47ED-BD42-D679C11D407E} = {D5E689AA-BE7E-4F5F-AF51-03F71C6C31B2}
 		{F63E0957-B60B-47A3-96BB-76DC243D0C8A} = {2322D330-1A60-4F79-B553-53DED803A098}
 		{CC4A233E-BE8A-47CC-A87C-8352BFD557B7} = {2322D330-1A60-4F79-B553-53DED803A098}
 		{7F88A658-6AD3-494D-975D-47C0B5D75033} = {BD344973-88A6-45FD-BCEA-11A3CF48CBDC}
+		{E8CB5696-C3E6-47ED-BD42-D679C11D407E} = {D5E689AA-BE7E-4F5F-AF51-03F71C6C31B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35

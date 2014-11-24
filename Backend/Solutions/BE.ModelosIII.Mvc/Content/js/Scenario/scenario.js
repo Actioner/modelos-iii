@@ -225,6 +225,11 @@ var ScenarioManager = function (options) {
     var _getCurrentModel = function () {
         _model.Name = $("#Name").val();
         _model.BinSize = $("#BinSize").val();
+        _model.Configuration.CrossoverProbability = $("#Configuration_CrossoverProbability").val();
+        _model.Configuration.MutationProbability = $("#Configuration_MutationProbability").val();
+        _model.Configuration.PopulationSize = $("#Configuration_PopulationSize").val();
+        _model.Configuration.StopCriterion = $("#Configuration_StopCriterion").val();
+        _model.Configuration.StopDepth = $("#Configuration_StopDepth").val();
         _model.Items = itemsManager.items;
 
         return _model;
