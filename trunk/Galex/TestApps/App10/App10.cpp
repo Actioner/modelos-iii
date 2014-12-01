@@ -51,19 +51,18 @@ Algorithm::StopCriteria::GaGenerationCriterion generationStopCriterion;
 
 int scenarioId;
 int runId;
+bool report;
 
 void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 {
 	const Population::GaPopulation& population = ( (Population::GaPopulationEventData&)data ).GetPopulation();
-
-	const Problems::BPP::BinChromosome& chromosome = (const Problems::BPP::BinChromosome&)*population[ 0 ].GetChromosome();
-	const Problems::BPP::BinConfigBlock& ccb = (const Problems::BPP::BinConfigBlock&)*chromosome.GetConfigBlock();
-
 	const Statistics::GaStatistics& stats = population.GetStatistics();
 
-	/*if( stats.GetCurrentGeneration() != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
-		return;*/
+	if(!report && stats.GetCurrentGeneration() != 1 && !stats.GetValue<Fitness::GaFitness>( Population::GADV_BEST_FITNESS ).IsChanged( 2 ) )
+		return;
 
+	const Problems::BPP::BinChromosome& chromosome = (const Problems::BPP::BinChromosome&)*population[0].GetChromosome();
+	const Problems::BPP::BinConfigBlock& ccb = (const Problems::BPP::BinConfigBlock&)*chromosome.GetConfigBlock();
 	const Common::Data::GaSingleDimensionArray<Problems::BPP::BinConfigBlock::Item>& items = ccb.GetItems();
 
 	ModDb::GENERATION generation = ModDb::GENERATION();
@@ -72,7 +71,11 @@ void GACALL MyHandler(int id, Common::Observing::GaEventData& data)
 	generation.Number = stats.GetCurrentGeneration();
 	generation = ModDb::InsertGeneration(generation);
 
-	for( int i = 0; i < population.GetCount(); i++ )
+	int iterations = 1;
+	if (report)
+		iterations = population.GetCount();
+
+	for( int i = 0; i < iterations; i++ )
 	{
 		const Problems::BPP::BinChromosome& chromosome = (const Problems::BPP::BinChromosome&)*population[ i ].GetChromosome();
 
@@ -155,10 +158,10 @@ int main(int argc, const char* argv[])
 			&Population::SelectionOperations::GaTournamentSelectionParams( 2, -1, 2, 2, Population::SelectionOperations::GaTournamentSelectionParams::GATST_ROULETTE_WHEEL_SELECTION ),
 			&Population::SelectionOperations::GaTournamentSelectionConfig( fitnessComparatorSetup, Chromosome::GaMatingSetup() ) );
 
-		Population::GaCouplingSetup couplingSetup( &coupling, &Population::GaCouplingParams( 50, 1 ),
+		Population::GaCouplingSetup couplingSetup( &coupling, &Population::GaCouplingParams(floor(scenario.PopulationSize / 2) - 1, 1 ),
 			&Population::GaCouplingConfig( Chromosome::GaMatingSetup( &mating, NULL, &matingConfiguration ) ) );
 
-		Population::GaReplacementSetup replacementSetup( &replacement, &Population::GaReplacementParams( 50 ), &Population::GaReplacementConfig() );
+		Population::GaReplacementSetup replacementSetup(&replacement, &Population::GaReplacementParams(floor(scenario.PopulationSize / 2) - 1), &Population::GaReplacementConfig());
 		Population::GaScalingSetup scalingSetup( &scaling, NULL, &Population::GaScalingConfig() );
 
 		Algorithm::Stubs::GaSimpleGAStub simpleGA( WDID_POPULATION, WDID_POPULATION_STATS,
@@ -215,9 +218,11 @@ int main(int argc, const char* argv[])
 		run.PopulationSize = scenario.PopulationSize;
 		run.StopCriterion = scenario.StopCriterion;
 		run.StopDepth = scenario.StopDepth;
+		run.Report = scenario.Report;
 		
 		run = ModDb::InsertRun(run);
 		runId = run.RunId;
+		report = run.Report;
 
 		workflow.Start();
 		workflow.Wait();

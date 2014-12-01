@@ -63,6 +63,7 @@
                 configuration.PopulationSize = $("#Configuration_PopulationSize").val();
                 configuration.StopCriterion = $("#Configuration_StopCriterion").val();
                 configuration.StopDepth = $("#Configuration_StopDepth").val();
+                configuration.Report = $("#Configuration_Report").is(':checked');
 
                 $.post(validateUrl, configuration, function (result) {
                     $("#configuration").html(result.html);

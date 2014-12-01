@@ -37,6 +37,7 @@ namespace BE.ModelosIII.Mvc
                     sm.Configuration.PopulationSize = s.PopulationSize;
                     sm.Configuration.StopCriterion = s.StopCriterion;
                     sm.Configuration.StopDepth = s.StopDepth;
+                    sm.Configuration.Report = s.Report;
                 });
             Mapper.CreateMap<Item, ItemModel>();
 

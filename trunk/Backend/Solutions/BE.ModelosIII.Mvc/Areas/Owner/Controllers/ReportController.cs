@@ -119,7 +119,7 @@ namespace BE.ModelosIII.Mvc.Areas.Owner.Controllers
             ViewBag.Runs = scenarios.Select(m => new
                                                      {
                                                          ScenarioId = m.Id,
-                                                         Runs = m.Runs.Select(s => new { s.Id, RunOnUtc = s.RunOn.ToString("o") })
+                                                         Runs = m.Runs.Where(r => r.Report).Select(s => new { s.Id, RunOnUtc = s.RunOn.ToString("o") })
                                                      }).ToJson();
         }
     }

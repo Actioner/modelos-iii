@@ -12,7 +12,8 @@ namespace BE.ModelosIII.Tasks.Commands.Scenario
                 MutationProbability = 66,
                 PopulationSize = 100,
                 StopCriterion = Domain.Enums.StopCriterion.StatsChange,
-                StopDepth = 100
+                StopDepth = 2,
+                Report = false
             };
         }
     }

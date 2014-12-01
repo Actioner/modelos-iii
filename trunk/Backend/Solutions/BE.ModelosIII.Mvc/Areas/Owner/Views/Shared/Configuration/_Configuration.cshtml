@@ -64,6 +64,14 @@
                                 @Html.ValidationMessageFor(m => m.StopDepth, null, new { @class = "help-inline" })
                             </div>
                         </div>
+                        <div class="control-group">
+                            <label for="inputError" class="control-label">
+                                Ver en Reporte
+                            </label>
+                            <div class="controls">
+                                @Html.CheckBoxFor(m => m.Report, new { @class = "span4" })
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
