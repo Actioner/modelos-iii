@@ -14,6 +14,7 @@ namespace BE.ModelosIII.Tasks.Commands.Configuration
         public float MutationProbability { get; set; }
         public int PopulationSize { get; set; }
         public int StopDepth { get; set; }
+        public bool Report { get; set; }
         public Enums.StopCriterion StopCriterion { get; set; }
     }
 }

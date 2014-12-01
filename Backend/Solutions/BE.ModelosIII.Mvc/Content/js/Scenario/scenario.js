@@ -230,6 +230,7 @@ var ScenarioManager = function (options) {
         _model.Configuration.PopulationSize = $("#Configuration_PopulationSize").val();
         _model.Configuration.StopCriterion = $("#Configuration_StopCriterion").val();
         _model.Configuration.StopDepth = $("#Configuration_StopDepth").val();
+        _model.Configuration.Report = $("#Configuration_Report").is(':checked');
         _model.Items = itemsManager.items;
 
         return _model;

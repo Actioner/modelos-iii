@@ -76,6 +76,7 @@ namespace ModDb
 		int				PopulationSize;
 		int				StopDepth;
 		std::string		StopCriterion;
+		bool			Report;
 	} SCENARIO;
 
 	typedef struct ITEM_BINDING {
@@ -122,6 +123,7 @@ namespace ModDb
 		int				PopulationSize;
 		int				StopDepth;
 		std::string		StopCriterion;
+		bool			Report;
 	} RUN;
 
 	typedef struct SQL_CONNECTION {
@@ -293,7 +295,7 @@ Exit:
 		SCENARIO result;
 
 		/*SQL_CONNECTION sqlConnection = Connect();*/
-		std::wstring s = std::wstring(L"SELECT ScenarioId, Name, BinSize, CrossoverProbability, MutationProbability, PopulationSize, StopDepth, StopCriterion FROM Scenarios WHERE ScenarioId=");
+		std::wstring s = std::wstring(L"SELECT ScenarioId, Name, BinSize, CrossoverProbability, MutationProbability, PopulationSize, StopDepth, StopCriterion, Report FROM Scenarios WHERE ScenarioId=");
 		s += std::wstring(std::to_wstring(id));
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());
 
@@ -355,6 +357,9 @@ Exit:
 
 						pThisBinding = pThisBinding->sNext;
 						result.StopCriterion = ws2s(pThisBinding->wszBuffer);
+
+						pThisBinding = pThisBinding->sNext;
+						result.Report = wcsicmp(pThisBinding->wszBuffer, L"1") == 0;
 					}
 
 					while (pFirstBinding)
@@ -519,16 +524,18 @@ Exit:
 		result.PopulationSize = run.PopulationSize;
 		result.StopCriterion = run.StopCriterion;
 		result.StopDepth = run.StopDepth;
+		result.Report = run.Report;
 
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 
-		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO runs(scenarioId, CrossoverProbability, MutationProbability, PopulationSize, StopDepth, StopCriterion) VALUES(");
+		std::wstring s = std::wstring(L"SET NOCOUNT ON; INSERT INTO runs(scenarioId, CrossoverProbability, MutationProbability, PopulationSize, StopDepth, StopCriterion, Report) VALUES(");
 		s += std::wstring(std::to_wstring(run.ScenarioId)) + std::wstring(L", ");
 		s += std::wstring(std::to_wstring(run.CrossoverProbability)) + std::wstring(L", ");
 		s += std::wstring(std::to_wstring(run.MutationProbability)) + std::wstring(L", ");
 		s += std::wstring(std::to_wstring(run.PopulationSize)) + std::wstring(L", ");
 		s += std::wstring(std::to_wstring(run.StopDepth)) + std::wstring(L", ");
-		s += std::wstring(L"'") + converter.from_bytes(run.StopCriterion) + std::wstring(L"'");
+		s += std::wstring(L"'") + converter.from_bytes(run.StopCriterion) + std::wstring(L"', ");
+		s += std::wstring(std::to_wstring(run.Report));
 		s += std::wstring(L");SELECT @@IDENTITY;");
 
 		WCHAR* query = const_cast<wchar_t*>(s.c_str());

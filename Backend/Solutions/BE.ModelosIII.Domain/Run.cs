@@ -13,6 +13,7 @@ namespace BE.ModelosIII.Domain
         public virtual float MutationProbability { get; set; }
         public virtual int PopulationSize { get; set; }
         public virtual int StopDepth { get; set; }
+        public virtual bool Report { get; set; }
         public virtual Enums.StopCriterion StopCriterion { get; set; }
     }
 }

@@ -31,7 +31,8 @@ namespace BE.ModelosIII.Tasks
                 .ForMember(dest => dest.MutationProbability, opt => opt.MapFrom(src => src.Configuration.MutationProbability / 100))
                 .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom(src => src.Configuration.PopulationSize))
                 .ForMember(dest => dest.StopCriterion, opt => opt.MapFrom(src => src.Configuration.StopCriterion))
-                .ForMember(dest => dest.StopDepth, opt => opt.MapFrom(src => src.Configuration.StopDepth));
+                .ForMember(dest => dest.StopDepth, opt => opt.MapFrom(src => src.Configuration.StopDepth))
+                .ForMember(dest => dest.Report, opt => opt.MapFrom(src => src.Configuration.Report));
             Mapper.CreateMap<Item, ItemCommand>();
             Mapper.CreateMap<ItemCommand, Item>()
                 .ForMember(dest => dest.Scenario, opt => opt.Ignore());
